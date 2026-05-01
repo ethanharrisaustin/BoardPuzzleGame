@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca729a42130164fcb9f17eab67f578f7, type: 3}
+  m_Name: Items
+  m_EditorClassIdentifier: Assembly-CSharp::MapRoomSystem.RoomObjectFlyInSettings
+  objectCategory: Items
+  fallInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.8971761
+      outSlope: 0.8971761
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.17270055
+    - serializedVersion: 3
+      time: 0.44182852
+      value: 0.9993105
+      inSlope: 3.192482
+      outSlope: -1.196098
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.078784294
+      outWeight: 0.28497437
+    - serializedVersion: 3
+      time: 0.73717046
+      value: 1.001515
+      inSlope: 0.87156534
+      outSlope: -0.23316109
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.082723126
+      outWeight: 0.09428118
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.23535131
+      outSlope: 0.23535131
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09802328
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fallTime: 1.2
+  startYPos: 20
+  initialDelay: 2
+  delayMultiplier: 0.02
+  exitCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.08622922
+      outSlope: 0.08622922
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.030870445
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  exitTime: 0.4
+  exitInitialDelay: 0
+  exitDelayMultiplier: 0.01

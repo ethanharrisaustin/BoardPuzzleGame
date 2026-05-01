@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
+  m_Name: Arrow Down
+  m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
+  unique_id: arrow down
+  icon: {fileID: 5794155314715692409, guid: 639d45733098348e1acd4bb78d8c5986, type: 3}
+  roomObject: {fileID: 1669058590011997621, guid: 187fc8b6a264940a08d89aaa2ea0dcd4, type: 3}
+  cached_ui_item: {fileID: 0}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4778a4c91ee2e4e9a97f41f942d3475b, type: 3}
+  m_Name: -1 - Group Of Rooms 1
+  m_EditorClassIdentifier: Assembly-CSharp::MapRoomSystem.GroupOfRooms
+  rooms:
+  - {fileID: 11400000, guid: c58ca1ce39b5f4bdba9acee71266fc92, type: 2}
+  - {fileID: 11400000, guid: 29f7d6295630c429aab77a7d3baf0601, type: 2}
+  - {fileID: 11400000, guid: 7170b4db3a9f74471a3c19a4f467099c, type: 2}
+  - {fileID: 11400000, guid: 735547ee4969e40109099c10be77e7d3, type: 2}
+  - {fileID: 11400000, guid: a2534c620b6ad4baab26279182aeaa93, type: 2}
+  - {fileID: 11400000, guid: 0021d4ef8bf534fec8105eba2508dcc4, type: 2}

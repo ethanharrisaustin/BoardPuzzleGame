@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
+  m_Name: Movement Card - Left
+  m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
+  unique_id: move card left
+  icon: {fileID: 2426661945179154086, guid: 37816c6a3d90a46cfac15f2f3f83ee88, type: 3}
+  roomObject: {fileID: 7467132930847533008, guid: e40e0ac70116141dea96ea63d0b02cfa, type: 3}

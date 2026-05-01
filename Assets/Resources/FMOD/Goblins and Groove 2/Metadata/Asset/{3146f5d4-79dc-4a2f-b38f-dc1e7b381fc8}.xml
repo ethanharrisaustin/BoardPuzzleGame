@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{3146f5d4-79dc-4a2f-b38f-dc1e7b381fc8}">
+		<property name="assetPath">
+			<value>Combo loop parts/Rank D/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6c286306-17df-451e-9d12-988fc8ac0a4a}</destination>
+		</relationship>
+	</object>
+</objects>

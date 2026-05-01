@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{1911e15c-b8e5-4f52-aa5c-b439c0321fe9}">
+		<property name="assetPath">
+			<value>Combo loop parts/Rank C/Bass Rank C.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.4502267573696148</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6c286306-17df-451e-9d12-988fc8ac0a4a}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f5619b95-6eed-4f47-b56b-b1fb6e98a26b}">
+		<property name="assetPath">
+			<value>Combo loop parts/Rank B/Harp Rank B.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.6412018140589568</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6c286306-17df-451e-9d12-988fc8ac0a4a}</destination>
+		</relationship>
+	</object>
+</objects>
