@@ -22,7 +22,8 @@ namespace Cardboard
         {
             UI_ItemBoard.AddItemToBoard(cardboardItemObject);
 
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         public override string ObjectFlyInCategory()

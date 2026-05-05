@@ -61,9 +61,13 @@ public class ClickingManager : MonoBehaviour
             return null;
         }
 
-        IButton3D button3D = hitInfo.transform.GetComponentInChildren<IButton3D>();
+        IButton3D button3D = hitInfo.transform.GetComponentInChildren<IButton3D>(false);
 
-        button3D ??= hitInfo.transform.GetComponentInParent<IButton3D>();
+        if (button3D != null && !button3D.enabled) button3D = null;
+
+        button3D ??= hitInfo.transform.GetComponentInParent<IButton3D>(false);
+
+        if (button3D != null && !button3D.enabled) button3D = null;
 
         return button3D;
     }
@@ -79,5 +83,10 @@ public class ClickingManager : MonoBehaviour
         if (mouseDownButton != currentButton) return;
         
         currentButton?.Click();
+    }
+
+    public IButton3D HoveredButton()
+    {
+        return currentButton;
     }
 }  

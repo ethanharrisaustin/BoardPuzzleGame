@@ -1,3 +1,4 @@
+using Cardboard;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class CardboardItemObject : ScriptableObject, IItem
 
     [HideInInspector] public UI_Item_Base cached_ui_item;
 
+
+
     public UI_Item_Base GetItemUI()
     {
         if (cached_ui_item == null)
@@ -19,8 +22,10 @@ public class CardboardItemObject : ScriptableObject, IItem
             cached_ui_item = Instantiate(icon, parent).GetComponent<UI_Item_Base>();
 
             cached_ui_item.unique_id = unique_id;
-        }
 
+            cached_ui_item.cardboardItemObject = this;
+        }
+        
         cached_ui_item.gameObject.SetActive(true);
 
         return cached_ui_item;
@@ -31,6 +36,12 @@ public class CardboardItemObject : ScriptableObject, IItem
         return GetItemUI().GetImages();
     }
 
+    public CardboardItemGO GetItemGO()
+    {
+        CardboardItemGO cardboardItem = Instantiate(roomObject).GetComponent<CardboardItemGO>();
+
+        return cardboardItem;
+    }
 
     public Transform transform { get { return GetItemUI().transform; } }
 }

@@ -7,6 +7,8 @@ public interface IButton3D
     void Click();
 
     GameObject gameObject { get; }
+
+    bool enabled { get; set;}
 }
 
 public interface IDraggable3D 
