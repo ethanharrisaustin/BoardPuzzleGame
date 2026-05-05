@@ -1,3 +1,4 @@
+using Cardboard;
 using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -213,7 +214,21 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public virtual bool AddToCardboardHolder()
     {
-        return false;
+        IButton3D hoveredButton = ClickingManager.instance.HoveredButton();
+
+        if (hoveredButton == null)
+        {
+            return false;
+        }
+
+        if (hoveredButton is CardboardHolderGO == false)
+        {
+            return false;
+        }
+
+        CardboardHolderGO cardboardHolder = hoveredButton as CardboardHolderGO;
+
+        return cardboardHolder.AddCardboard(cardboardItemObject);
     }
 
     public virtual void OnDrag(UI_DraggedItem draggedItem)

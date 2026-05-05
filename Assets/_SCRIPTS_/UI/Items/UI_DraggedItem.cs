@@ -89,15 +89,15 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void OnStopDragging()
     {
-        // Drop item back to item board
-        if (draggedItem.CancelDrag())
-        {
-            CancelDrag();
-        } 
-        else if (draggedItem.AddToCardboardHolder())
+        if (draggedItem.AddToCardboardHolder())
         {
             AddToCardboardHolder();
         }
+        // Drop item back to item board
+        else if (draggedItem.CancelDrag())
+        {
+            CancelDrag();
+        } 
         // Use the item!
         else if (draggedItem.AddToTurnSlot())
         {
@@ -134,7 +134,13 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void AddToCardboardHolder()
     {
-        
+        // NOTE - actual add to cardboard holder logic in UI_Item_Base.cs
+
+        UI_Item_Base goToItem = GetDraggedItem();
+
+        UI_ItemBoard.GetItemUI(goToItem.unique_id, out UI_Item_Base item);
+
+        if (item.IsHidden()) item.ScaleInShow();
     }
 
     void StopFollowingMouse()
@@ -176,6 +182,6 @@ public class UI_DraggedItem : MonoBehaviour, IItem
     {
         if (Get().draggedItem == null) return false;
         
-        return false;
+        return true;
     }
 }

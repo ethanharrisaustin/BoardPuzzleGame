@@ -24,9 +24,13 @@ public class UI_ItemBoard : MonoBehaviour
         instance = this;
     }
 
-    public async static void AddItemToBoard(CardboardItemObject cardboardItemObject)
+    public static void AddItemToBoard(CardboardItemObject cardboardItemObject)
     {
-        if (AlreadyInItemBoard(cardboardItemObject)) return;
+        if (AlreadyInItemBoard(cardboardItemObject)) 
+        {
+            JustDoGoToAnim(cardboardItemObject);
+            return;
+        }
 
         UI_ItemMoveTo.Get().SetUp(
             cardboardItemObject, 
@@ -40,6 +44,18 @@ public class UI_ItemBoard : MonoBehaviour
         items.Insert(0, cardboardItemObject);
 
         instance.UpdateUI(startPositions);
+    }
+
+    static void JustDoGoToAnim(CardboardItemObject cardboardItemObject)
+    {
+        if (!GetItemUI(cardboardItemObject.unique_id, out UI_Item_Base item)) return;
+
+        UI_ItemMoveTo.Get().SetUp(
+            cardboardItemObject, 
+            Input.mousePosition,
+            item.transform.position,
+            null, 
+            1f);
     }
 
     public static bool AlreadyInItemBoard(CardboardItemObject cardboardItemObject)
