@@ -6,7 +6,7 @@ namespace BoardGame
     [System.Serializable]
     public class BoardGamePlayer : MonoBehaviour
     {
-        public CardboardHolder assignedPlayerPiece;
+        public CardboardHolderGO assignedPlayerPiece;
 
         public BoardGamePlayer()
         {
