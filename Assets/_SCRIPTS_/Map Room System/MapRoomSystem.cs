@@ -22,7 +22,7 @@ namespace MapRooms
 
         Room currentRoom = null;
 
-        [SerializeField] RoomObjectGO floorTile;
+        //[SerializeField] RoomObjectGO floorTile;
 
         #endregion
         
@@ -233,14 +233,11 @@ namespace MapRooms
         #region Room size
 
         List<RoomObjectGO> floorTiles = new List<RoomObjectGO>();
-        RoomObjectPool floorTilePool;
+        [SerializeField] RoomObjectPool floorTilePool;
 
         Vector3 startPos, endPos;
 
-        void InitRoomSize()
-        {
-            floorTilePool = GetRoomObjectPool(floorTile.roomObject);
-        }
+   
 
         bool calculatingRoomSize = false;
 
@@ -250,7 +247,7 @@ namespace MapRooms
 
             calculatingRoomSize = true;
 
-            if (floorTilePool == null) InitRoomSize();
+            //if (floorTilePool == null) InitRoomSize();
 
             floorTiles = floorTilePool.pool;
 
@@ -259,6 +256,8 @@ namespace MapRooms
             endPos = await EndPosOfRoom();
 
             calculatingRoomSize = false;
+
+            Debug.Log("Finished calculating room pos");
         }
 
         async Task<Vector3> StartPosOfRoom()

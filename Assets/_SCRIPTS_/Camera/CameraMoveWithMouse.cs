@@ -1,3 +1,4 @@
+using MapRooms;
 using UnityEngine;
 
 public class CameraMoveWithMouse : MonoBehaviour
@@ -20,6 +21,8 @@ public class CameraMoveWithMouse : MonoBehaviour
         camMovement = CreateCamMovement();
 
         transform.position += camMovement * Time.deltaTime * camMoveSpeed;
+
+
     }
 
     Vector3 cachedCamMovement = new Vector3();
@@ -46,6 +49,8 @@ public class CameraMoveWithMouse : MonoBehaviour
         cachedCamMovement.y = 0f;
 
         cachedCamMovement.Normalize();
+
+        
 
         return cachedCamMovement;
     }
@@ -126,5 +131,5 @@ public class CameraMoveWithMouse : MonoBehaviour
         }
     }
 
-
+    
 }

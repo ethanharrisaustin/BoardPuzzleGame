@@ -1,7 +1,10 @@
+using MapRooms;
 using UnityEngine;
 
 public class CameraMouseUITriggers : MonoBehaviour
 {
+    [SerializeField] CameraPositionTracker positionTracker;
+
     [SerializeField] RectTransform mousePos;
     [SerializeField] RectTransform leftBarrier;
     [SerializeField] RectTransform rightBarrier;
@@ -12,16 +15,20 @@ public class CameraMouseUITriggers : MonoBehaviour
 
     [SerializeField] float atBottomRightTimeThreshold = 0.2f;
 
+    [Space]
+
+    [SerializeField] Transform cameraPositionTrackerParent;
+
     public static CameraMouseUITriggers instance;
 
     bool mouseAtRight, mouseAtLeft, mouseAtUp, mouseAtDown;
 
     float mouseAtRightTimer, mouseAtDownTimer = 0f;
 
-    public bool MouseAtRight { get { return mouseAtRight && Reached(mouseAtRightTimer); } }
-    public bool MouseAtLeft { get { return mouseAtLeft; } }
-    public bool MouseAtDown { get { return mouseAtDown && Reached(mouseAtDownTimer); } }
-    public bool MouseAtUp { get { return mouseAtUp; } }
+    public bool MouseAtRight { get { return mouseAtRight && Reached(mouseAtRightTimer) && positionTracker.CanHoverRight(); } }
+    public bool MouseAtLeft { get { return mouseAtLeft && positionTracker.CanHoverLeft(); } }
+    public bool MouseAtDown { get { return mouseAtDown && Reached(mouseAtDownTimer) && positionTracker.CanHoverDown(); } }
+    public bool MouseAtUp { get { return mouseAtUp && positionTracker.CanHoverUp(); } }
 
     bool Reached(float timer)
     {
@@ -71,4 +78,5 @@ public class CameraMouseUITriggers : MonoBehaviour
         mouseAtRightTimer = mouseAtRight ? mouseAtRightTimer + Time.deltaTime : 0f;
         mouseAtDownTimer = mouseAtDown ? mouseAtDownTimer + Time.deltaTime : 0f;
     }
+
 }
