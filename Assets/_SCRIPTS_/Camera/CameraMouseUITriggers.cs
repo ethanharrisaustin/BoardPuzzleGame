@@ -25,8 +25,8 @@ public class CameraMouseUITriggers : MonoBehaviour
 
     bool Reached(float timer)
     {
-        if (mouseDelta == Vector2.zero) return true;
-        
+        if (mouseDelta == Vector2.zero && mouseAt0Timer > 0.05f) return true;
+
         return timer > atBottomRightTimeThreshold;
     }
 
@@ -37,12 +37,22 @@ public class CameraMouseUITriggers : MonoBehaviour
     }
 
     Vector2 mouseDelta;
+    float mouseAt0Timer = 0f;
 
     // Update is called once per frame
     void LateUpdate()
     {
         mouseDelta = (Vector2)mousePos.position - Input.mousePosition;
         mousePos.position = Input.mousePosition;
+
+        if (mouseDelta == Vector2.zero)
+        {
+            mouseAt0Timer += Time.deltaTime;
+        }
+        else
+        {
+            mouseAt0Timer = 0f;
+        }
 
         SetMousePositions();
         SetTimers();

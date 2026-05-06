@@ -12,7 +12,7 @@ public class CameraMoveWithMouse : MonoBehaviour
 
     [SerializeField] float camMoveSpeed = 1f;
     [SerializeField] Transform camFowardLeft, camFowardRight;
-    public Vector3 camMovement;
+    Vector3 camMovement;
     
     // Update is called once per frame
     void Update()
@@ -125,4 +125,6 @@ public class CameraMoveWithMouse : MonoBehaviour
             cachedCamMovement.z = camForward.z;
         }
     }
+
+
 }

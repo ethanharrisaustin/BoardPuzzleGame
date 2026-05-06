@@ -22,6 +22,8 @@ namespace MapRooms
 
         Room currentRoom = null;
 
+        [SerializeField] RoomObjectGO floorTile;
+
         #endregion
         
         #region Monobehaviour Functions
@@ -112,10 +114,14 @@ namespace MapRooms
             // Once they have all been spawned, initialise them!
             for (int i = 0; i < roomObjectPools.Count; ++i) roomObjectPools[i].InitAllRoomObjects();
 
-            PlayerGO.instance?.ActivatePlayer();
+            CalculateRoomStartAndEndPos();
 
-            MapToAStarGrid.instance?.CreateAStarGrid();
+            //PlayerGO.instance?.ActivatePlayer();
+
+            //MapToAStarGrid.instance?.CreateAStarGrid();
         }
+
+        
 
         bool finishedFlyingIn = false;
         void OnStartSpawning()
@@ -220,6 +226,106 @@ namespace MapRooms
             }
 
             return null;
+        }
+
+        #endregion
+
+        #region Room size
+
+        List<RoomObjectGO> floorTiles = new List<RoomObjectGO>();
+        RoomObjectPool floorTilePool;
+
+        Vector3 startPos, endPos;
+
+        void InitRoomSize()
+        {
+            floorTilePool = GetRoomObjectPool(floorTile.roomObject);
+        }
+
+        bool calculatingRoomSize = false;
+
+        async void CalculateRoomStartAndEndPos()
+        {
+            if (calculatingRoomSize) return;
+
+            calculatingRoomSize = true;
+
+            if (floorTilePool == null) InitRoomSize();
+
+            floorTiles = floorTilePool.pool;
+
+            startPos = await StartPosOfRoom();
+
+            endPos = await EndPosOfRoom();
+
+            calculatingRoomSize = false;
+        }
+
+        async Task<Vector3> StartPosOfRoom()
+        {
+            float smallestX = Mathf.Infinity;
+            float smallestZ = Mathf.Infinity;
+
+            int counter = 0;
+            for (int i = 0; i < floorTiles.Count; ++i)
+            {
+                counter ++;
+
+                if (counter > 30)
+                {
+                    counter = 0;
+                    await Task.Yield();
+                }
+
+                if (floorTiles[i] == null) continue;
+                
+                Vector3 tilePosition = floorTiles[i].GetPosition();
+                if (tilePosition.x < smallestX) smallestX = tilePosition.x;
+                if (tilePosition.z < smallestZ) smallestZ = tilePosition.z;
+            }    
+
+            return new Vector3(smallestX, 0, smallestZ);
+        }
+
+        async Task<Vector3> EndPosOfRoom()
+        {
+            float largestX = Mathf.NegativeInfinity;
+            float largestZ = Mathf.NegativeInfinity;
+
+            int counter = 0;
+            for (int i = 0; i < floorTiles.Count; ++i)
+            {
+                counter ++;
+
+                if (counter > 30)
+                {
+                    counter = 0;
+                    await Task.Yield();
+                }
+
+                if (floorTiles[i] == null) continue;
+                
+                Vector3 tilePosition = floorTiles[i].GetPosition();
+                if (tilePosition.x > largestX) largestX = tilePosition.x;
+                if (tilePosition.z > largestZ) largestZ = tilePosition.z;
+            }    
+
+            return new Vector3(largestX, 0, largestZ);
+        }
+
+        public static bool CalculatingRoomSize()
+        {
+            return instance.calculatingRoomSize;
+        }
+
+        public static Vector3 RoomStartPos()
+        {
+            return instance.startPos;
+        }
+
+        public static Vector3 RoomEndPos()
+        {
+            return instance.endPos;
         }
 
         #endregion
