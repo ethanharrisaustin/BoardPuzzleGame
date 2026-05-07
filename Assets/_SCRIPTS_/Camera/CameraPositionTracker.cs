@@ -36,8 +36,6 @@ public class CameraPositionTracker : MonoBehaviour
     {
         TrackCameraPositionLeftRighty();
         TrackCameraPositionUpDowny();
-
-        Debug.Log(ud_camPositionMarker.localPosition.x - camZOffset + " " + ud_bottomRightBoundary.localPosition.x);
     }
 
     public bool CanHoverLeft()

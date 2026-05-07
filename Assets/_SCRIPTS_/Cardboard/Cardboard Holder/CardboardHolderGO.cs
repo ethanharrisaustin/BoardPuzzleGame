@@ -4,6 +4,7 @@ using MapRooms;
 using MapNavigation;
 using DG.Tweening;
 using System.Threading.Tasks;
+using MoveItMoveIt;
 
 namespace Cardboard
 {
@@ -156,6 +157,12 @@ namespace Cardboard
 
         public void Click()
         {
+            if (ContainsPlayerCharacter())
+            {
+                UI_PlayerTurnBoard.Show(this);
+                return;
+            }
+
             if (heldCardboard.Count > 0)
             {
                 CollectCardboard();
@@ -183,9 +190,13 @@ namespace Cardboard
 
             if (UI_DraggedItem.IsDraggingItem()) return;
 
+            FloorTileGO floorTileGO = GetFloorTileCentre();
+
+            if (floorTileGO == null) return; 
+            
             transform.DOKill(false);
 
-            SnapTo(GetFloorTileCentre().GetPosition()); // Reset position to current tile
+            SnapTo(floorTileGO.GetPosition()); // Reset position to current tile
 
             isTweeningBounce = true;
 
@@ -193,6 +204,27 @@ namespace Cardboard
             {
                 isTweeningBounce = false;
             });
+        }
+
+        bool ContainsPlayerCharacter()
+        {
+            if (heldCardboard.Count != 1) return false;
+
+            return heldCardboard[0].cardboardItemObject.isPlayerPiece;
+        }
+
+        public CardboardItemGO GetPlayerPiece()
+        {
+            if (!ContainsPlayerCharacter()) return null;
+
+            return heldCardboard[0];
+        }
+
+        public string PlayerPieceUniqueID()
+        {
+            if (!ContainsPlayerCharacter()) return "";
+            
+            return GetPlayerPiece().cardboardItemObject.unique_id;
         }
     }
 }

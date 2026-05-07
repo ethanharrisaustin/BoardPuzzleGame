@@ -25,7 +25,7 @@ public class CameraMouseUITriggers : MonoBehaviour
 
     float mouseAtRightTimer, mouseAtDownTimer = 0f;
 
-    public bool MouseAtRight { get { return mouseAtRight && Reached(mouseAtRightTimer) && positionTracker.CanHoverRight(); } }
+    public bool MouseAtRight { get { return mouseAtRight /*&& Reached(mouseAtRightTimer) */&& positionTracker.CanHoverRight(); } }
     public bool MouseAtLeft { get { return mouseAtLeft && positionTracker.CanHoverLeft(); } }
     public bool MouseAtDown { get { return mouseAtDown && Reached(mouseAtDownTimer) && positionTracker.CanHoverDown(); } }
     public bool MouseAtUp { get { return mouseAtUp && positionTracker.CanHoverUp(); } }

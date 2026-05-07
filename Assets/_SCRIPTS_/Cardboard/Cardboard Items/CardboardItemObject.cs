@@ -8,6 +8,7 @@ public class CardboardItemObject : ScriptableObject, IItem
     public string unique_id;
     public GameObject icon;
     public GameObject roomObject;
+    public bool isPlayerPiece;
 
     [HideInInspector] public UI_Item_Base cached_ui_item;
 

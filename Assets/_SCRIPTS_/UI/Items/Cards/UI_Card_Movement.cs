@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class UI_Card_Movement : UI_Card_Base
+namespace MoveItMoveIt
 {
-    public enum Direction { up, right, down, left, none }
-
-    [SerializeField] Direction direction;
-
-    public override void PerformAction()
+    public class UI_Card_Movement : UI_Card_Base
     {
-        base.PerformAction();
+        public enum Direction { up, right, down, left, none }
 
-        // Move the player piece in this direction!
+        [SerializeField] Direction direction;
+
+        public override void PerformAction()
+        {
+            base.PerformAction();
+
+            // Move the player piece in this direction!
+        }
     }
 }

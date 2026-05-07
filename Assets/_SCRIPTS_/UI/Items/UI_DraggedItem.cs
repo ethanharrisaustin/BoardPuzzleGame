@@ -1,6 +1,7 @@
 using Cardboard;
 using UnityEngine;
 using UnityEngine.UI;
+using MoveItMoveIt;
 
 
 public class UI_DraggedItem : MonoBehaviour, IItem
@@ -89,7 +90,11 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void OnStopDragging()
     {
-        if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
+        if (draggedItem.AddToTurnSlot())
+        {
+            AddToTurnSlot();
+        }
+        else if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
         {
             EndDragAndScaleItemBackIn();
         }
@@ -98,11 +103,6 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         {
             CancelDrag();
         } 
-        // Use the item!
-        else if (draggedItem.AddToTurnSlot())
-        {
-            AddToTurnSlot();
-        }
 
         StopFollowingMouse();
     }
