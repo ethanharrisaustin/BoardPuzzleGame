@@ -2,7 +2,7 @@ public interface IDragOnto
 {
     void OnDragHover(CardboardItemObject item);
 
-    void OnDragUnhover(CardboardItemObject item);
+    void OnDragUnhover();
 
     bool OnDropDraggedItem(CardboardItemObject item);
 

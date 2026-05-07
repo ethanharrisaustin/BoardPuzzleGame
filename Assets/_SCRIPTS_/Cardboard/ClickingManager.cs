@@ -15,10 +15,21 @@ public class ClickingManager : MonoBehaviour
     IButton3D previousButton;
     IButton3D currentButton;
 
+    IDragOnto previousDragOnto;
+    IDragOnto currentDragOnto;
+
     // Update is called once per frame
     void LateUpdate()
     {
-        GetHoveredButton();
+        RaycastHit hit = HitRaycast();
+
+        GetHoveredButton(hit);
+        GetHoveredDragOnto(hit);
+    }
+
+    void GetHoveredButton(RaycastHit hit)
+    {
+        currentButton = GetButton3D(hit);
 
         if (previousButton != currentButton)
         {
@@ -29,9 +40,26 @@ public class ClickingManager : MonoBehaviour
         previousButton = currentButton;
     }
 
-    void GetHoveredButton()
+    void GetHoveredDragOnto(RaycastHit hit)
     {
-        currentButton = GetButton3D(HitRaycast());
+        if (!UI_DraggedItem.IsDraggingItem())
+        {
+            currentDragOnto?.OnDragUnhover();
+            previousDragOnto?.OnDragUnhover();
+
+            previousDragOnto = null;
+            currentDragOnto = null;
+        }
+
+        currentDragOnto = GetDragOnto(hit);
+
+        if (previousDragOnto != currentDragOnto)
+        {
+            previousDragOnto?.OnDragHover(UI_DraggedItem.GetDraggedItem().cardboardItemObject);
+            currentDragOnto?.OnDragUnhover();
+        }
+
+        previousDragOnto = currentDragOnto;
     }
 
     RaycastHit HitRaycast()

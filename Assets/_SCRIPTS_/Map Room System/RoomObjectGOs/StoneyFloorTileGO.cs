@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MapRooms
 {
-    public class StoneyFloorTileGO : FloorTileGO, IDragOnto
+    public class StoneyFloorTileGO : FloorTileGO
     {
         [SerializeField] new Renderer renderer;
         [SerializeField] MeshFilter meshFilter;
@@ -38,21 +38,6 @@ namespace MapRooms
             int _mesh = Mathf.Abs((xPos + (yPos * (meshes.Length - 1))) % meshes.Length);
 
             meshFilter.mesh = meshes[_mesh];
-        }
-
-        public void OnDragHover(CardboardItemObject item)
-        {
-            
-        }
-
-        public void OnDragUnhover(CardboardItemObject item)
-        {
-            
-        }
-
-        public bool OnDropDraggedItem(CardboardItemObject item)
-        {
-            return true;
         }
     }
 }
