@@ -231,6 +231,15 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         return cardboardHolder.AddCardboard(cardboardItemObject);
     }
 
+    public virtual bool DropOntoObject()
+    {
+        IDragOnto dragOnto = ClickingManager.instance.HoveredDragOnto();
+
+        if (dragOnto == null) return false;
+
+        return dragOnto.OnDropDraggedItem(cardboardItemObject);
+    }
+
     public virtual void OnDrag(UI_DraggedItem draggedItem)
     {
         

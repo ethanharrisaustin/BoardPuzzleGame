@@ -31,11 +31,16 @@ public class ClickingManager : MonoBehaviour
 
     void GetHoveredButton()
     {
+        currentButton = GetButton3D(HitRaycast());
+    }
+
+    RaycastHit HitRaycast()
+    {
         Ray ray = CreateRay();
 
         Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layerMask, QueryTriggerInteraction.Collide);
 
-        currentButton = GetButton3D(hitInfo);
+        return hitInfo;
     }
 
     Camera cam;
@@ -72,6 +77,24 @@ public class ClickingManager : MonoBehaviour
         return button3D;
     }
 
+    IDragOnto GetDragOnto(RaycastHit hitInfo)
+    {
+        if (hitInfo.transform == null)
+        {
+            return null;
+        }
+
+        IDragOnto dragOnto = hitInfo.transform.GetComponentInChildren<IDragOnto>(false);
+
+        if (dragOnto != null && !dragOnto.enabled) dragOnto = null;
+
+        dragOnto ??= hitInfo.transform.GetComponentInParent<IDragOnto>(false);
+
+        if (dragOnto != null && !dragOnto.enabled) dragOnto = null;
+
+        return dragOnto;
+    }
+
     IButton3D mouseDownButton = null;
     public void MouseDown()
     {
@@ -88,5 +111,10 @@ public class ClickingManager : MonoBehaviour
     public IButton3D HoveredButton()
     {
         return currentButton;
+    }
+
+    public IDragOnto HoveredDragOnto()
+    {
+        return GetDragOnto(HitRaycast());
     }
 }  

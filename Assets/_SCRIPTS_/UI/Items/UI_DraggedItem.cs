@@ -89,9 +89,9 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void OnStopDragging()
     {
-        if (draggedItem.AddToCardboardHolder())
+        if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
         {
-            AddToCardboardHolder();
+            EndDragAndScaleItemBackIn();
         }
         // Drop item back to item board
         else if (draggedItem.CancelDrag())
@@ -132,7 +132,7 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         }, 0.5f);
     }
 
-    void AddToCardboardHolder()
+    void EndDragAndScaleItemBackIn()
     {
         // NOTE - actual add to cardboard holder logic in UI_Item_Base.cs
 
