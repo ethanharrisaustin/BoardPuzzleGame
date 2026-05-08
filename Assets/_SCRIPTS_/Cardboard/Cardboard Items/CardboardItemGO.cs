@@ -31,6 +31,9 @@ namespace Cardboard
             return "Items";
         }
 
-        
+        public string[] GetTurnSlotsIDS()
+        {
+            return cardboardItemObject.GetTurnSlotsIDS();
+        }
     }
 }

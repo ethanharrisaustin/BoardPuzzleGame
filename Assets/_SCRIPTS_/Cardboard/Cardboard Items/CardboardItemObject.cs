@@ -1,4 +1,5 @@
 using Cardboard;
+using MoveItMoveIt;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class CardboardItemObject : ScriptableObject, IItem
 
     [HideInInspector] public UI_Item_Base cached_ui_item;
 
-
+    [HideInInspector] public string[] savedValues;
 
     public UI_Item_Base GetItemUI()
     {
@@ -45,4 +46,12 @@ public class CardboardItemObject : ScriptableObject, IItem
     }
 
     public Transform transform { get { return GetItemUI().transform; } }
+
+    public string[] GetTurnSlotsIDS()
+    {
+        if (savedValues == null || savedValues.Length != UI_PlayerTurnBoard.numberTurnSlots)
+            savedValues = new string[UI_PlayerTurnBoard.numberTurnSlots];
+        
+        return savedValues;
+    }
 }

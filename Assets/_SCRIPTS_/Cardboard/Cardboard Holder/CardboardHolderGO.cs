@@ -26,6 +26,8 @@ namespace Cardboard
         [SerializeField] CardboardItemObject itemObject;
 
         
+
+        
         protected override void Start()
         {
             base.Start();
@@ -225,6 +227,31 @@ namespace Cardboard
             if (!ContainsPlayerCharacter()) return "";
             
             return GetPlayerPiece().cardboardItemObject.unique_id;
+        }
+
+        public void SetPlayerMovements(UI_TurnSlot[] slots)
+        {
+            string[] movementCardsIDs = GetPlayerPiece().GetTurnSlotsIDS();
+
+            for (int i = 0; i < movementCardsIDs.Length; ++i)
+            {
+                movementCardsIDs[i] = slots[i].CardsUniqueID();
+            }
+
+            GetPlayerPiece().cardboardItemObject.savedValues = movementCardsIDs;
+        }
+
+        UI_Card_Base[] cachedCards = new UI_Card_Base[UI_PlayerTurnBoard.numberTurnSlots];
+        public UI_Card_Base[] GetPlayerMovements()
+        {
+            string[] movementCardsIDs = GetPlayerPiece().GetTurnSlotsIDS();
+
+            for (int i = 0; i < cachedCards.Length; ++i)
+            {
+                cachedCards[i] = CardboardItems.GetCardItem(movementCardsIDs[i]);
+            }
+
+            return null;
         }
     }
 }

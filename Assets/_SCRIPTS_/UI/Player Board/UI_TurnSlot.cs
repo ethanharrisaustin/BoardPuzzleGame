@@ -31,25 +31,15 @@ namespace MoveItMoveIt
         Vector2 mouseDownPosition;
         Vector2 mouseOffset;
 
+        UI_PlayerTurnBoard playerTurnBoard;
 
         #endregion
 
         #region Monobehaviour Functions
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
-            hoveredSlot = null;
-        }
-
-        void OnEnable()
-        {
-            turnSlots.Add(this);
-        }
-
-        void OnDisable()
-        {
-            turnSlots.Remove(this);
+            playerTurnBoard = GetComponentInParent<UI_PlayerTurnBoard>();
         }
 
         #endregion
@@ -155,6 +145,8 @@ namespace MoveItMoveIt
             currentCard = card;
 
             MouseUp();
+
+            playerTurnBoard.OnTurnsChange();
         }
 
         static List<UI_TurnSlot> cachedOverlappingSlots = new List<UI_TurnSlot>();
@@ -326,6 +318,21 @@ namespace MoveItMoveIt
         {
             currentCard = null;
             HideChildImages();
+
+            playerTurnBoard.OnTurnsChange();
+        }
+
+        public void SetSlotAsEmptyWithoutNotify()
+        {
+            currentCard = null;
+            HideChildImages();
+
+            playerTurnBoard.OnTurnsChange();
+        }
+
+        public void ShowCard(string unique_id)
+        {
+            
         }
 
         #endregion
@@ -360,6 +367,13 @@ namespace MoveItMoveIt
             if (uI_TurnSlot.gameObject.activeInHierarchy == false) return true;
 
             return false;
+        }
+
+        public string CardsUniqueID()
+        {
+            if (currentCard == null) return "";
+
+            return currentCard.unique_id;
         }
 
         #endregion
