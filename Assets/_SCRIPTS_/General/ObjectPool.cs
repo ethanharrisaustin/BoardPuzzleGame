@@ -33,6 +33,15 @@ public class ObjectPool : MonoBehaviour
         return newGO.GetComponent<T>();
     }
 
+    public GameObject GetObject(int index)
+    {
+        if (index < 0) return null;
+
+        if (index >= objectPool.Count) return null;
+
+        return objectPool[index];
+    }
+
     public void DestroyObject(GameObject obj)
     {
         obj.SetActive(false);

@@ -1,3 +1,4 @@
+using BoardGame;
 using Cardboard;
 using DG.Tweening;
 using UnityEngine;
@@ -52,6 +53,8 @@ namespace MoveItMoveIt
             instance.currentCardboardHolder = cardboardHolderGO;
 
             instance.AnimationOpen();
+
+            instance.ShowCards();
         }
 
         void FollowPlayerPiece()
@@ -79,13 +82,13 @@ namespace MoveItMoveIt
                 slots[i].SetSlotAsEmptyWithoutNotify();
             }
 
-            string[] savedValues = currentCardboardHolder.GetPlayerPiece().cardboardItemObject.savedValues;
+            BoardGamePlayer boardGamePlayer = Board.instance.GetBoardGamePlayer(currentCardboardHolder);
 
-            if (savedValues == null) return;
+            string[] moveCards = boardGamePlayer.GetMovementCards();
 
-            for (int i = 0; i < savedValues.Length; ++i)
+            for (int i = 0; i < moveCards.Length; ++i)
             {
-                slots[i].ShowCard(savedValues[i]);
+                slots[i].ShowCard(moveCards[i]);
             }
         }
 
@@ -103,11 +106,29 @@ namespace MoveItMoveIt
             open = false;
         }
 
+        public void EjectPlayerPiece()
+        {
+            currentCardboardHolder.CollectCardboard();
+            
+            CloseImmediately();
+        }
+
+        public void CloseImmediately()
+        {
+            transform.DOKill(false);
+            transform.localScale = Vector3.zero;
+
+            currentCardboardHolder = null;
+
+            openTimer = 0f;
+            open = false;
+        }
+
         public void OnTurnsChange()
         {
             if (currentCardboardHolder == null) return;
 
-            currentCardboardHolder.SetPlayerMovements(slots);
+            Board.instance.SetUpPlayers(currentCardboardHolder, slots);
         }
     }
 }

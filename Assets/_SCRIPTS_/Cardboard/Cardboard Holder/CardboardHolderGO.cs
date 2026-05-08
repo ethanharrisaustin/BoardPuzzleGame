@@ -25,9 +25,6 @@ namespace Cardboard
         [SerializeField] bool collectable = false;
         [SerializeField] CardboardItemObject itemObject;
 
-        
-
-        
         protected override void Start()
         {
             base.Start();
@@ -176,13 +173,18 @@ namespace Cardboard
             // Collect logic
         }
 
-        void CollectCardboard()
+        public void CollectCardboard()
         {
             CardboardItemGO itemToCollect = heldCardboard[heldCardboard.Count - 1];
 
             heldCardboard.Remove(itemToCollect);
 
-            itemToCollect.Click();           
+            itemToCollect.Click();     
+
+            if (heldCardboard.Count == 1)
+            {
+                MoveFirstCardboardToCenter();
+            }      
         }
         
         bool isTweeningBounce = false;
@@ -208,7 +210,7 @@ namespace Cardboard
             });
         }
 
-        bool ContainsPlayerCharacter()
+        public bool ContainsPlayerCharacter()
         {
             if (heldCardboard.Count != 1) return false;
 
@@ -236,9 +238,13 @@ namespace Cardboard
             for (int i = 0; i < movementCardsIDs.Length; ++i)
             {
                 movementCardsIDs[i] = slots[i].CardsUniqueID();
+
+                Debug.Log(slots[i].CardsUniqueID());
             }
 
             GetPlayerPiece().cardboardItemObject.savedValues = movementCardsIDs;
+
+            Debug.Log(GetPlayerPiece().cardboardItemObject.savedValues.Length);
         }
 
         UI_Card_Base[] cachedCards = new UI_Card_Base[UI_PlayerTurnBoard.numberTurnSlots];

@@ -129,7 +129,7 @@ namespace MoveItMoveIt
             return UI_DraggedItem.IsDraggingItem<UI_Card_Base>();
         }
 
-        public void AddCard(UI_Card_Base card)
+        public void AddCard(UI_Card_Base card, bool withNotify = true)
         {
             HideChildImages();
 
@@ -146,7 +146,7 @@ namespace MoveItMoveIt
 
             MouseUp();
 
-            playerTurnBoard.OnTurnsChange();
+            if (withNotify) playerTurnBoard.OnTurnsChange();
         }
 
         static List<UI_TurnSlot> cachedOverlappingSlots = new List<UI_TurnSlot>();
@@ -326,13 +326,15 @@ namespace MoveItMoveIt
         {
             currentCard = null;
             HideChildImages();
-
-            playerTurnBoard.OnTurnsChange();
         }
 
         public void ShowCard(string unique_id)
         {
-            
+            UI_Card_Base uI_Card_Base = CardboardItems.GetCardItem(unique_id);
+
+            if (uI_Card_Base == null) return;
+
+            AddCard(uI_Card_Base, false);
         }
 
         #endregion

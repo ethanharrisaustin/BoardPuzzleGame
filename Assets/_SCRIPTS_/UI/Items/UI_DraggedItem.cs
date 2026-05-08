@@ -138,9 +138,16 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
         UI_Item_Base goToItem = GetDraggedItem();
 
-        UI_ItemBoard.GetItemUI(goToItem.unique_id, out UI_Item_Base item);
+        if (goToItem.cardboardItemObject.UseOnce())
+        {
+            UI_ItemBoard.RemoveFromItemBoard(goToItem.unique_id);
+        }
+        else
+        {
+            UI_ItemBoard.GetItemUI(goToItem.unique_id, out UI_Item_Base item);
 
-        if (item.IsHidden()) item.ScaleInShow();
+            if (item.IsHidden()) item.ScaleInShow();
+        }
     }
 
     void StopFollowingMouse()

@@ -10,16 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
-  m_Name: Card Piece
+  m_Name: Hilda
   m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
-  unique_id: card piece
-  icon: {fileID: 5794155314715692409, guid: 1f2404c35f26c4ea6bc1ae49d2e5a9d8, type: 3}
-  roomObject: {fileID: 2022489383520496198, guid: 55bc164893c074346b28db4c2cd0df26, type: 3}
-  isPlayerPiece: 0
+  unique_id: hilda
+  icon: {fileID: 6243690924814766558, guid: 66d64943febe441f1a2ca32b1486528f, type: 3}
+  roomObject: {fileID: 9151976831804392998, guid: 4202c4c93cd0847bea37d01a1f89b5cf, type: 3}
+  isPlayerPiece: 1
   cached_ui_item: {fileID: 0}
-  savedValues:
-  - card piece
-  - 
-  - 
-  - 
-  - 
+  savedValues: []

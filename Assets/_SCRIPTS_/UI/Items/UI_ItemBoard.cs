@@ -32,18 +32,16 @@ public class UI_ItemBoard : MonoBehaviour
             return;
         }
 
+        items.Insert(0, cardboardItemObject);
+
+        instance.UpdateUI();
+
         UI_ItemMoveTo.Get().SetUp(
             cardboardItemObject, 
             Input.mousePosition,
             instance.firstSlotPosition.position,
             null, 
             1f);
-
-        Vector2[] startPositions = GetItemStartPositions();
-
-        items.Insert(0, cardboardItemObject);
-
-        instance.UpdateUI(startPositions);
     }
 
     static void JustDoGoToAnim(CardboardItemObject cardboardItemObject)
@@ -71,23 +69,39 @@ public class UI_ItemBoard : MonoBehaviour
         return false;
     }
 
-    async void UpdateUI(Vector2[] startPositions)
+    public class ItemEndPosition
     {
-        animationHandler.MakeBoardItemsStartPos(items, startPositions);
+        public Vector2 endPosition;
+        public CardboardItemObject item;
+
+        public ItemEndPosition(CardboardItemObject item, Vector2 endPosition)
+        {
+            this.endPosition = endPosition;
+            this.item = item;
+        }
+    }   
+
+    List<CardboardItemObject> oldListOfItems = new List<CardboardItemObject>();
+    async void UpdateUI()
+    {
+        GetOldListOfItems();
+
+        animationHandler.MakeBoardItemsStartPos(oldListOfItems, MakeStartPositions(oldListOfItems));
 
         realGrid.alpha = 0;
         animationGrid.alpha = 1;
 
         // Actually update them
         RemoveAllItemsUI();
-
         ShowItemsInOrder();
 
+        // Let grid layout update
         GetComponent<RectTransform>().ForceUpdateRectTransforms();
 
         await Task.Yield();
         await Task.Yield();
 
+        // Do the movement animation
         animationHandler.MoveBoardItems(GetItemEndPositions(), () =>
         {
             realGrid.alpha = 1;
@@ -105,24 +119,54 @@ public class UI_ItemBoard : MonoBehaviour
         return result;
     }
 
-    static Vector2[] GetItemEndPositions()
+    List<CardboardItemObject> GetOldListOfItems()
     {
-        Vector2[] result = new Vector2[items.Count - 1];
-        for (int i = 1; i < items.Count; ++i)
+        oldListOfItems.Clear();
+
+        UI_Item_Base[] uI_Item_Bases = GetComponentsInChildren<UI_Item_Base>(false);
+
+        for (int i = 0; i < uI_Item_Bases.Length; ++i)
         {
-            result[i - 1] = items[i].GetItemUI().transform.position;
+            UI_Item_Base itemUI = uI_Item_Bases[i];
+
+            oldListOfItems.Add(itemUI.cardboardItemObject);
+        }
+
+        return oldListOfItems;
+    }
+
+    Vector2[] MakeStartPositions(List<CardboardItemObject> oldItems)
+    {
+        Vector2[] returnValue = new Vector2[oldItems.Count];
+
+        for (int i = 0; i < returnValue.Length; ++i)
+        {
+            returnValue[i] = oldItems[i].GetItemUI().transform.position;
+        }
+        
+        return returnValue;
+    }
+
+    static ItemEndPosition[] GetItemEndPositions()
+    {
+        ItemEndPosition[] result = new ItemEndPosition[items.Count];
+        for (int i = 0; i < items.Count; ++i)
+        {
+            result[i] = new ItemEndPosition(items[i], items[i].GetItemUI().transform.position);
         }
         return result;
     }
 
     void RemoveAllItemsUI()
     {
-        for (int i = 0; i < items.Count; ++i)
-        {
-            if (items[i].cached_ui_item == null) continue;
+        UI_Item_Base[] uI_Item_Bases = GetComponentsInChildren<UI_Item_Base>(false);
 
-            items[i].cached_ui_item.gameObject.SetActive(false);
-            items[i].cached_ui_item.transform.parent = null;
+        for (int i = 0; i < uI_Item_Bases.Length; ++i)
+        {
+            UI_Item_Base itemUI = uI_Item_Bases[i];
+
+            itemUI.gameObject.SetActive(false);
+            itemUI.transform.parent = null;
         }
     }
 
@@ -168,4 +212,27 @@ public class UI_ItemBoard : MonoBehaviour
 
         return instance.firstSlotPosition.position;
     }
+
+    public static int RemoveFromItemBoard(string unique_id)
+    {
+        for (int i = 0; i < items.Count; ++i)
+        {
+            if (unique_id != items[i].unique_id) continue;
+            
+            if (items[i].cached_ui_item != null)
+            {
+                items[i].cached_ui_item.gameObject.SetActive(false);
+                items[i].cached_ui_item.transform.parent = null;
+            }
+            
+            items.RemoveAt(i);
+
+            instance.UpdateUI();
+
+            return i;
+        }
+
+        return 0;
+    }
 }
+

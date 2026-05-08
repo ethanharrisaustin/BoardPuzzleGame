@@ -9,7 +9,7 @@ public class CardboardItemObject : ScriptableObject, IItem
     public string unique_id;
     public GameObject icon;
     public GameObject roomObject;
-    public bool isPlayerPiece;
+    public bool isPlayerPiece, useOnce;
 
     [HideInInspector] public UI_Item_Base cached_ui_item;
 
@@ -29,6 +29,9 @@ public class CardboardItemObject : ScriptableObject, IItem
         }
         
         cached_ui_item.gameObject.SetActive(true);
+        cached_ui_item.transform.parent = UI_ItemBoard.instance.itemUiParent;
+        cached_ui_item.transform.localScale = Vector3.one;
+        cached_ui_item.GetComponentInChildren<Image>().enabled = true;
 
         return cached_ui_item;
     }
@@ -53,5 +56,10 @@ public class CardboardItemObject : ScriptableObject, IItem
             savedValues = new string[UI_PlayerTurnBoard.numberTurnSlots];
         
         return savedValues;
+    }
+
+    public bool UseOnce()
+    {
+        return isPlayerPiece || useOnce;
     }
 }
