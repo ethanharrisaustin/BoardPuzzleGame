@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Lantern
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: lantern
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 5580924887233514972, guid: ae4a97aec67c64f58b3785eb82aae63e, type: 3}
+  roomObject: {fileID: 8499645270652999455, guid: 282033824555a46ea88a853edcff60e8, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}

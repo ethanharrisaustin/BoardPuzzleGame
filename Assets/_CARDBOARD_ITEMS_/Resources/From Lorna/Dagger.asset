@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Dagger
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: dagger
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 2912169451051782914, guid: 72d906bec60074f77af46993d7bc1bcb, type: 3}
+  roomObject: {fileID: 4165424352431950436, guid: 17fed69f28fb5427e89f958cc9099544, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}

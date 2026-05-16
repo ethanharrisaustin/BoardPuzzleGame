@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: key
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 7827862616068664880, guid: f6d3b9d3d80c84e1b9b519ac94e863c2, type: 3}
+  roomObject: {fileID: 233858197292440840, guid: 9eb56fc3285f1459ea2f82e1de790ef5, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}

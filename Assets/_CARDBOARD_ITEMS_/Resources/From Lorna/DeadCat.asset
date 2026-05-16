@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DeadCat
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: deadcat
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 3851152944484422334, guid: c40b2e9c3eaea44eeaf95038c6cf1b21, type: 3}
+  roomObject: {fileID: 9072270853395826410, guid: 1efbac6456e624019a21a838ec39695f, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}

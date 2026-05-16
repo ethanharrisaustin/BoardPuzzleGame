@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Falcon
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: Falcon
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 7083523646108340344, guid: d65279f52bdd140f5aefbb94d78fbd2c, type: 3}
+  roomObject: {fileID: 7543000573307058597, guid: 3acf6101bacd941c3b6ed28f0a4b0182, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}

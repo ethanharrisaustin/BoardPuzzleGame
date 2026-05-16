@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
+  m_Name: Sapling
+  m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
+  unique_id: sapling
+  icon: {fileID: 1576765671415811260, guid: 86c6cf08c41364ecb98763346068b55e, type: 3}
+  roomObject: {fileID: 3671553360010605248, guid: bf9593234d75b47f3b93051184bd6530, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Sapling

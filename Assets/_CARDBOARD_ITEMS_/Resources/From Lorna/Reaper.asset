@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
+  m_Name: Reaper
+  m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
+  unique_id: reaper
+  icon: {fileID: 5260841698679059375, guid: 0cd14ff55b89349c3bc359d755fac780, type: 3}
+  roomObject: {fileID: 6430594638595962518, guid: d57284d0201004961abe37b8140274df, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Reaper

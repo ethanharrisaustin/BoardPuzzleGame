@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Feather
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
   unique_id: Feather
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 3270080530292385406, guid: c81b3c1ecce5f4f32bf2d46ce2fe96fd, type: 3}
+  roomObject: {fileID: 2760414537021253155, guid: 7c63db00a61e54eab80910085f525a76, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}
