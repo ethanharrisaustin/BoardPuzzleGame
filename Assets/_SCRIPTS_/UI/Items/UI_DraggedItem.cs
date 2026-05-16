@@ -76,6 +76,13 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void FollowMouse()
     {
+        if (UI_CompletionMenu.isOpen)
+        {
+            if (draggedItem != null) draggedItem.dragging = false;
+            CancelDrag();
+            return;
+        }
+
         if (!draggedItem.dragging)
         {
             OnStopDragging();

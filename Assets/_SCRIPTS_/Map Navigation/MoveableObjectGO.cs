@@ -16,6 +16,8 @@ namespace MapNavigation
         public Collider gridTriggerCenter;
         [SerializeField] LayerMask layerMask;
 
+
+
         protected bool objectIsMoving { get; private set;}
 
         protected override void LateUpdate()
@@ -30,12 +32,6 @@ namespace MapNavigation
             gridTriggersHolder.rotation = Quaternion.identity;
         }
 
-        /* 
-        protected void SetPositionTo(FloorTileGO floorTileGO)
-        {
-            transform.position = new Vector3(floorTileGO.transform.position.x,  transform.position.y, floorTileGO.transform.position.z);
-        }
-        */
         public virtual void SetPositionTo(FloorTileGO floorTileGO)
         { 
             SetPositionTo(floorTileGO.GetPosition());
@@ -80,7 +76,7 @@ namespace MapNavigation
                     graphicHolder.localRotation = Quaternion.identity;
                 });
 
-            transform.DORotate(Quaternion.LookRotation(transform.position - position).eulerAngles, jumpTime);
+            //transform.DORotate(Quaternion.LookRotation(transform.position - position).eulerAngles, jumpTime);
         }
 
         public virtual bool CanMoveNorth(out FloorTileGO floorTileNorth) { return CanMove(gridTriggerN, out floorTileNorth); }
@@ -114,6 +110,11 @@ namespace MapNavigation
 
             return FloorTileGO.GetFloorTileGO(colliders);
         }
+
+        public virtual void AttemptMoveForward() { }
+        public virtual void AttemptMoveLeft() { }
+        public virtual void AttemptMoveRight() { }
+        public virtual void AttemptMoveBackward() { }
 
         public virtual void SnapTo(Vector3 position)
         {

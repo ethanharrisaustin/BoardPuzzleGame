@@ -1,5 +1,5 @@
 using UnityEngine;
-using FMOD;
+//using FMOD;
 
 public class MusicRhythmTimer : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class MusicRhythmTimer : MonoBehaviour
 
     void CalculateMusicDelta()
     {
-        float time = AudioManager.MusicTime();
+        float time = 0;//AudioManager.MusicTime();
 
         musicDelta = musicTimeLastFrame > time ? 0 : time - musicTimeLastFrame;
 

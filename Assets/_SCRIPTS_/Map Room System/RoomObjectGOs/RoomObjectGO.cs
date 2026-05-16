@@ -95,7 +95,7 @@ namespace MapRooms
 
         bool flyingOut= false;
 
-        void FlyObjectOut(RoomObject.FlySettings flySettings, Action<RoomObjectGO> destroy)
+        void FlyObjectOut(RoomObject.FlySettings flySettings, Action<RoomObjectGO> onDestroy)
         {
             // REALLY DIRTY FIX
             if (flySettings == null)
@@ -112,7 +112,7 @@ namespace MapRooms
             transform.DOMoveY(transform.position.y + flySettings.startYPos, flySettings.fallTime)
                 .SetEase(flySettings.curve)
                 .SetDelay(delay)
-                .OnComplete(() => { flyingOut = false; destroy.Invoke(this); });
+                .OnComplete(() => { flyingOut = false; onDestroy.Invoke(this); });
         }
 
         public virtual string ObjectFlyInCategory()

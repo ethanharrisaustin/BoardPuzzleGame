@@ -6,42 +6,32 @@ using UnityEngine.UI;
 
 namespace MoveItMoveIt
 {
-    public class UI_PlayerTurnBoard : MonoBehaviour
+    public class UI_PlayerTurnBoard : UI_PlayerTurns
     {
         public static UI_PlayerTurnBoard instance;
-        Camera cam;
 
-        [SerializeField] CanvasGroup canvasGroup;
-
-        CardboardHolderGO currentCardboardHolder;
-
-        public const int numberTurnSlots = 5;
-
-        UI_TurnSlot[] slots;
-
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             instance = this;
-
-            transform.localScale = Vector3.zero;
         }
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        protected override void LateUpdate()
         {
-            cam = Camera.main;
+            base.LateUpdate();
 
-            slots = GetComponentsInChildren<UI_TurnSlot>();
+            if (open) OpenUpdate();
         }
 
-        float openTimer = 0f;
-        bool open = false;
-
-        void LateUpdate()
+        protected override void OpenUpdate()
         {
-            FollowPlayerPiece();
+            base.OpenUpdate();
 
-            if (open) openTimer += Time.deltaTime;
+            if (Board.inPlayMode)
+            {
+                ForceClose();
+            }
         }
 
         public static void Show(CardboardHolderGO cardboardHolderGO)
@@ -57,71 +47,13 @@ namespace MoveItMoveIt
             instance.ShowCards();
         }
 
-        void FollowPlayerPiece()
-        {
-            if (currentCardboardHolder == null) return;
-
-            transform.position = cam.WorldToScreenPoint(currentCardboardHolder.transform.position + Vector3.up * 1.8f);
-        }
-
-        void AnimationOpen()
-        {
-            FollowPlayerPiece();
-
-            transform.DOKill(false);
-            transform.localScale = Vector3.zero;
-            transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
-
-            open = true;
-        }
-
-        void ShowCards()
-        {
-            for (int i = 0; i < slots.Length; ++i)
-            {
-                slots[i].SetSlotAsEmptyWithoutNotify();
-            }
-
-            BoardGamePlayer boardGamePlayer = Board.instance.GetBoardGamePlayer(currentCardboardHolder);
-
-            string[] moveCards = boardGamePlayer.GetMovementCards();
-
-            for (int i = 0; i < moveCards.Length; ++i)
-            {
-                slots[i].ShowCard(moveCards[i]);
-            }
-        }
-
-        public void Close()
-        {
-            if (!open || openTimer < 0.2f) return;
-
-            transform.DOKill(false);
-            transform.localScale = Vector3.one;
-            transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).SetUpdate(true);
-
-            currentCardboardHolder = null;
-
-            openTimer = 0f;
-            open = false;
-        }
-
         public void EjectPlayerPiece()
         {
+            if (!open || Board.inPlayMode) return;
+
             currentCardboardHolder.CollectCardboard();
             
             CloseImmediately();
-        }
-
-        public void CloseImmediately()
-        {
-            transform.DOKill(false);
-            transform.localScale = Vector3.zero;
-
-            currentCardboardHolder = null;
-
-            openTimer = 0f;
-            open = false;
         }
 
         public void OnTurnsChange()

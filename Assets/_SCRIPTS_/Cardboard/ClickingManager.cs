@@ -21,6 +21,15 @@ public class ClickingManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (UI_CompletionMenu.isOpen)
+        {
+            previousButton = null;
+            currentButton = null;
+            previousDragOnto = null;
+            currentDragOnto = null;
+            return;
+        }
+        
         RaycastHit hit = HitRaycast();
 
         GetHoveredButton(hit);

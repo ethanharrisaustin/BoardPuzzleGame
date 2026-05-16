@@ -1,3 +1,4 @@
+using BoardGame;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,9 +7,11 @@ namespace MoveItMoveIt
 {
     public class UI_Card_Base : UI_Item_Base
     {
-        public virtual void PerformAction()
+        public virtual bool PerformAction(BoardGamePlayer player)
         {
+            if (player.GetCardboardHolder().shrunken) return false;
             
+            return true;
         }
 
         public override void OnDrag(UI_DraggedItem draggedItem)

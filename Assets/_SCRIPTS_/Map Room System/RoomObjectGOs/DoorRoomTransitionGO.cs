@@ -38,18 +38,22 @@ namespace MapRooms
             roomUniqueID = values[0];
         }
 
-        protected override void OnObjectEnter(Collider other)
+        protected override bool OnObjectEnter(Collider other)
         {
-            base.OnObjectEnter(other);
+            bool returnValue = base.OnObjectEnter(other);
 
             hasPlayer = ContainsPlayer();
+
+            return returnValue;
         }
 
-        protected override void OnObjectExit(Collider other)
+        protected override bool OnObjectExit(Collider other)
         {
-            base.OnObjectExit(other);
+            bool returnValue = base.OnObjectExit(other);
 
             hasPlayer = ContainsPlayer();
+
+            return returnValue;
         }
 
         protected override void Update()

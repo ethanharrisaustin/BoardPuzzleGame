@@ -18,20 +18,24 @@ namespace MapRooms
         protected void OnCollisionStay(Collision other) { OnObjectEnter(other.collider); }
         protected void OnCollisionExit(Collision other) { OnObjectExit(other.collider); }
 
-        protected virtual void OnObjectEnter(Collider other)
+        protected virtual bool OnObjectEnter(Collider other)
         {
             RoomObjectGO roomObjectGO = GetRoomObjectGO(other);
-            if (roomObjectGO == null || RoomObjectAlreadyOnTile(roomObjectGO)) return;
+            if (roomObjectGO == null || RoomObjectAlreadyOnTile(roomObjectGO)) return false;
 
             objectsOnTile.Add(roomObjectGO);
+
+            return true;
         }
 
-        protected virtual void OnObjectExit(Collider other)
+        protected virtual bool OnObjectExit(Collider other)
         {
             RoomObjectGO roomObjectGO = GetRoomObjectGO(other);
-            if (roomObjectGO == null || !RoomObjectAlreadyOnTile(roomObjectGO)) return;
+            if (roomObjectGO == null || !RoomObjectAlreadyOnTile(roomObjectGO)) return false;
 
             objectsOnTile.Remove(roomObjectGO);
+
+            return true;
         }
 
         protected bool RoomObjectAlreadyOnTile(RoomObjectGO roomObjectGO)
@@ -90,6 +94,35 @@ namespace MapRooms
         public void RemoveToTile(RoomObjectGO roomObjectGO)
         {
             objectsOnTile.Remove(roomObjectGO);
+        }
+
+        public bool GetObjectOnTile<T>(out T roomObject) where T : RoomObjectGO
+        {
+            for (int i = 0; i < objectsOnTile.Count; ++i)
+            {
+                if (!objectsOnTile[i] is T) continue;
+                
+                roomObject = objectsOnTile[i] as T;
+                return true;
+            }
+
+            roomObject = null;
+            return false;
+        }
+
+        public bool GetObjectsOnTile<T>(out T[] roomObjects) where T : RoomObjectGO
+        {
+            List<T> values = new List<T>();
+
+            for (int i = 0; i < objectsOnTile.Count; ++i)
+            {
+                if (!objectsOnTile[i] is T) continue;
+                
+                values.Add(objectsOnTile[i] as T);
+            }
+
+            roomObjects = values.ToArray();
+            return roomObjects.Length > 0;
         }
     }
 }

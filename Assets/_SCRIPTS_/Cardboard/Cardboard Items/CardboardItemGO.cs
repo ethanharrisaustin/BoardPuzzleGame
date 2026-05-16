@@ -1,6 +1,7 @@
 using UnityEngine;
 using MapRooms;
 using MapNavigation;
+using UnityEngine.Events;
 
 namespace Cardboard
 {
@@ -10,7 +11,7 @@ namespace Cardboard
 
         public void MouseOver()
         {
-
+    
         }
 
         public void MouseOut()
@@ -22,7 +23,6 @@ namespace Cardboard
         {
             UI_ItemBoard.AddItemToBoard(cardboardItemObject);
 
-            //gameObject.SetActive(false);
             Destroy(gameObject);
         }
 

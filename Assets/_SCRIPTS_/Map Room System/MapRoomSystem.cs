@@ -247,8 +247,6 @@ namespace MapRooms
 
             calculatingRoomSize = true;
 
-            //if (floorTilePool == null) InitRoomSize();
-
             floorTiles = floorTilePool.pool;
 
             startPos = await StartPosOfRoom();
@@ -256,8 +254,6 @@ namespace MapRooms
             endPos = await EndPosOfRoom();
 
             calculatingRoomSize = false;
-
-            Debug.Log("Finished calculating room pos");
         }
 
         async Task<Vector3> StartPosOfRoom()

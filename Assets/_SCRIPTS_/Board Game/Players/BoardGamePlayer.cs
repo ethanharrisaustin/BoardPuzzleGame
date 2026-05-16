@@ -11,6 +11,12 @@ namespace BoardGame
 
         public string[] movementCards;
 
+        public int playerTurnIndex = 0;
+
+        public Vector3 startPos, startRot;
+
+        public bool canMove = true;
+
         public string[] GetMovementCards()
         {
             if (movementCards == null || movementCards.Length != UI_PlayerTurnBoard.numberTurnSlots)
@@ -29,6 +35,30 @@ namespace BoardGame
         public BoardGamePlayer(CardboardHolderGO cardboardHolderGO)
         {
             playerID = cardboardHolderGO.GetPlayerPiece().cardboardItemObject.unique_id;
+        }
+
+        public CardboardHolderGO GetCardboardHolder()
+        {
+            return CardboardHolderGO.GetCardboardHolderWithPiece(playerID);
+        }
+
+        public bool CanDoMove()
+        {
+            if (UI_CompletionMenu.isOpen) return false;
+            
+            if (AllMovementCardsAreEmpty()) return false;
+            
+            return canMove;
+        }
+
+        bool AllMovementCardsAreEmpty()
+        {
+            for (int i = 0; i < movementCards.Length; ++i)
+            {
+                if (!string.IsNullOrEmpty(movementCards[i])) return false;
+            }
+
+            return true;
         }
     }
 }

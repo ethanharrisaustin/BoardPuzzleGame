@@ -1,21 +1,22 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public interface IButton3D 
+public class Button3D : MonoBehaviour, IButton3D
 {
-    void MouseOver();
-    void MouseOut();
-    void Click();
+    public UnityEvent mouseOver, mouseOut, click;
 
-    GameObject gameObject { get; }
+    public void MouseOver()
+    {
+        mouseOver.Invoke();
+    }
 
-    bool enabled { get; set;}
-}
+    public void MouseOut()
+    {
+        mouseOut.Invoke();
+    }
 
-public interface IDraggable3D 
-{
-    void MouseDown();
-    void MouseUp();
-    void StartDrag(Vector3 worldPosition);
-    void OnDrag(Vector3 worldPosition);
-    void EndDrag(Vector3 worldPosition);
+    public void Click()
+    {
+        click.Invoke();
+    }
 }

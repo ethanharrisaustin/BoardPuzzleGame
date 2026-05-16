@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Cardboard;
 using UnityEngine.UI;
 
 public class UI_ItemBoard : MonoBehaviour

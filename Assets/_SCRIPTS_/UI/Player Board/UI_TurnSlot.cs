@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cardboard;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -32,6 +33,10 @@ namespace MoveItMoveIt
         Vector2 mouseOffset;
 
         UI_PlayerTurnBoard playerTurnBoard;
+
+        [SerializeField] Color highlightColour;
+        [SerializeField] Color unhighlightColour;
+        [SerializeField] Color impossibleMoveColour;
 
         #endregion
 
@@ -175,9 +180,19 @@ namespace MoveItMoveIt
 
         #region Highlighting
 
-        void Highlight()
+        public void Highlight()
         {
-            background.color = backgroundOnColour;
+            SetColour(backgroundOnColour, highlightColour);
+        }
+
+        public void Unhighlight()
+        {
+            SetColour(backgroundOffColour, GetColour(unhighlightColour, UI_Item_Base.normalBrightness));
+        }
+
+        void SetColour(Color backgroundColour, Color imagesColour)
+        {
+            background.color = backgroundColour;
 
             if (!hasCard) 
             {
@@ -189,25 +204,21 @@ namespace MoveItMoveIt
             {
                 if (childImages[i] == background) continue;
                 
-                childImages[i].color = currentCard.originalColour[i - 1];
+                childImages[i].color = currentCard.originalColour[i - 1] * imagesColour;
             }
         }
 
-        void Unhighlight()
+        public async void ShowImpossibleMove()
         {
-            background.color = backgroundOffColour;
-
-            if (!hasCard) 
+            for (int i = 0; i < 3; ++i)
             {
-                HideChildImages();
-                return;
-            }
+                SetColour(backgroundOnColour, impossibleMoveColour);
 
-            for (int i = 1; i < Mathf.Min(childImages.Length, currentCard.originalColour.Length); ++i)
-            {
-                if (childImages[i] == background) continue;
-                
-                childImages[i].color = GetColour(currentCard.originalColour[i - 1], UI_Item_Base.normalBrightness);
+                await Task.Delay(200);
+
+                SetColour(backgroundOffColour, GetColour(unhighlightColour, 0.5f));
+
+                await Task.Delay(200);
             }
         }
 

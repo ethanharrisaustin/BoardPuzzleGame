@@ -40,21 +40,28 @@ public class CameraPositionTracker : MonoBehaviour
 
     public bool CanHoverLeft()
     {
+        if (UI_CompletionMenu.isOpen) return false;
+        
         return lr_camPositionMarker.localPosition.x > lr_topLeftBoundary.localPosition.x + leftPadding;
     }
 
     public bool CanHoverRight()
     {
+        if (UI_CompletionMenu.isOpen) return false;
+
         return lr_camPositionMarker.localPosition.x < lr_bottomRightBoundary.localPosition.x - rightPadding;
     }
 
     public bool CanHoverUp()
     {
-       return ud_camPositionMarker.localPosition.x - camZOffset > ud_bottomRightBoundary.localPosition.x + upPadding;
+        if (UI_CompletionMenu.isOpen) return false;
+
+        return ud_camPositionMarker.localPosition.x - camZOffset > ud_bottomRightBoundary.localPosition.x + upPadding;
     }
 
     public bool CanHoverDown()
     {
+        if (UI_CompletionMenu.isOpen) return false;
         
         return ud_camPositionMarker.localPosition.x - camZOffset < ud_topLeftBoundary.localPosition.x - downPadding;
     }

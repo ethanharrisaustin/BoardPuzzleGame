@@ -12,7 +12,7 @@ namespace Cardboard
     {
         public List<CardboardItemGO> heldCardboard;
 
-        public int assignedToPlayer = 1;
+        public static List<CardboardHolderGO> cardboardHolders = new List<CardboardHolderGO>();
 
         [Space]
 
@@ -23,7 +23,8 @@ namespace Cardboard
         [SerializeField] AnimationCurve bounceCurve;
 
         [SerializeField] bool collectable = false;
-        [SerializeField] CardboardItemObject itemObject;
+
+        [HideInInspector] public bool shrunken = false;
 
         protected override void Start()
         {
@@ -31,6 +32,16 @@ namespace Cardboard
 
             heldCardboard.Clear();
             heldCardboard.AddRange(GetHeldCardboards());
+        }
+
+        void OnEnable()
+        {
+            cardboardHolders.Add(this);
+        }
+
+        void OnDisable()
+        {
+            cardboardHolders.Remove(this);
         }
 
         protected CardboardItemGO[] GetHeldCardboards()
@@ -231,33 +242,47 @@ namespace Cardboard
             return GetPlayerPiece().cardboardItemObject.unique_id;
         }
 
-        public void SetPlayerMovements(UI_TurnSlot[] slots)
+        public bool ContainsPiece(string cardboardPieceUniqueID)
         {
-            string[] movementCardsIDs = GetPlayerPiece().GetTurnSlotsIDS();
-
-            for (int i = 0; i < movementCardsIDs.Length; ++i)
+            for (int i = 0; i < heldCardboard.Count; ++i)
             {
-                movementCardsIDs[i] = slots[i].CardsUniqueID();
+                if (heldCardboard[i].cardboardItemObject.unique_id != cardboardPieceUniqueID) continue;
 
-                Debug.Log(slots[i].CardsUniqueID());
+                return true;
             }
 
-            GetPlayerPiece().cardboardItemObject.savedValues = movementCardsIDs;
-
-            Debug.Log(GetPlayerPiece().cardboardItemObject.savedValues.Length);
+            return false;
         }
 
-        UI_Card_Base[] cachedCards = new UI_Card_Base[UI_PlayerTurnBoard.numberTurnSlots];
-        public UI_Card_Base[] GetPlayerMovements()
+        public static CardboardHolderGO GetCardboardHolderWithPiece(string cardboardPieceUniqueID)
         {
-            string[] movementCardsIDs = GetPlayerPiece().GetTurnSlotsIDS();
-
-            for (int i = 0; i < cachedCards.Length; ++i)
+            for (int i = 0; i < cardboardHolders.Count; ++i)
             {
-                cachedCards[i] = CardboardItems.GetCardItem(movementCardsIDs[i]);
+                if (!cardboardHolders[i].ContainsPiece(cardboardPieceUniqueID)) continue;
+
+                return cardboardHolders[i];
             }
 
             return null;
+        }
+
+        public void OnResetPiece()
+        {
+            shrunken = false;
+
+            transform.DOKill(false);
+            transform.localScale = Vector3.one;
+        }
+
+        public void ShrinkCardboardHolder()
+        {
+            transform.DOKill(false);
+
+            shrunken = true;
+
+            transform.DOScale(0f, 0.4f).SetEase(Ease.InBack);
+
+            transform.DOMove(FinishFloorTileGO.FinishTile.GetPosition(), 0.3f);
         }
     }
 }
