@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ClickingManager : MonoBehaviour
 {
+    [SerializeField] Camera cam;
     [SerializeField] LayerMask layerMask;
 
     public static ClickingManager instance;
@@ -27,6 +28,7 @@ public class ClickingManager : MonoBehaviour
             currentButton = null;
             previousDragOnto = null;
             currentDragOnto = null;
+
             return;
         }
         
@@ -80,14 +82,8 @@ public class ClickingManager : MonoBehaviour
         return hitInfo;
     }
 
-    Camera cam;
     Camera GetCamera()
     {
-        if (cam == null)
-        {
-            cam = Camera.main;
-        }
-
         return cam;
     }
 
