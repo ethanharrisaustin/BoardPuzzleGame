@@ -15,3 +15,8 @@ MonoBehaviour:
   unique_id: move card up
   icon: {fileID: 5794155314715692409, guid: 9e21bd66986824c3c9a88d2ff33d1ec0, type: 3}
   roomObject: {fileID: 3689682786783564233, guid: 379e7a0d99c584407a29895d397c959a, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Move Up Card

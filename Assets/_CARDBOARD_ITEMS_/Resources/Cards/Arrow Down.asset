@@ -15,4 +15,8 @@ MonoBehaviour:
   unique_id: arrow down
   icon: {fileID: 5794155314715692409, guid: 639d45733098348e1acd4bb78d8c5986, type: 3}
   roomObject: {fileID: 1669058590011997621, guid: 187fc8b6a264940a08d89aaa2ea0dcd4, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
   cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Pointing Down

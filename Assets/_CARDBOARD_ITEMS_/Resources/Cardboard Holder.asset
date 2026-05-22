@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: Cardboard Holder
   m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
   unique_id: collectable cardboard holder
-  itemIcon: {fileID: 4009692674010643959, guid: 7df9e8245443647d2895b1ec9c98f7f5, type: 3}
-  itemPrefab: {fileID: 649391145478979452, guid: 3bc09b23360ce4faba6b5afb9ec6c76a, type: 3}
+  icon: {fileID: 0}
+  roomObject: {fileID: 0}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Cardboard Holder

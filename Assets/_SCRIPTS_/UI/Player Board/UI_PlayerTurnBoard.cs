@@ -30,7 +30,7 @@ namespace MoveItMoveIt
 
             if (Board.inPlayMode)
             {
-                ForceClose();
+                CloseImmediately();
             }
         }
 

@@ -15,4 +15,8 @@ MonoBehaviour:
   unique_id: arrow up
   icon: {fileID: 5794155314715692409, guid: d0536b1a36e0b4f0da1654abcf9b949c, type: 3}
   roomObject: {fileID: 1795854557163639810, guid: 3fd49157184704b298d23da7d1c4629d, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
   cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Pointing Up

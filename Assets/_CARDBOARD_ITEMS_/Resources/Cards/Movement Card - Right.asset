@@ -15,3 +15,8 @@ MonoBehaviour:
   unique_id: move card right
   icon: {fileID: 375138408162566256, guid: 5175f65f724fe417e98d9b51cc0990a5, type: 3}
   roomObject: {fileID: 5921540123387574834, guid: 9f8675cdc757a40ba9788e18dedb8a66, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Move Right Card

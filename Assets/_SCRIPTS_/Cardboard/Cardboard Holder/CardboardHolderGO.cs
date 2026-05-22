@@ -5,6 +5,7 @@ using MapNavigation;
 using DG.Tweening;
 using System.Threading.Tasks;
 using MoveItMoveIt;
+using BoardGame;
 
 namespace Cardboard
 {
@@ -34,6 +35,18 @@ namespace Cardboard
             heldCardboard.AddRange(GetHeldCardboards());
         }
 
+        public override void Spawn(RoomObject roomObject, RoomObject.FlySettings flySettings)
+        {
+            base.Spawn(roomObject, flySettings);
+
+            for (int i = 0; i < heldCardboard.Count; ++i)
+            {
+                Destroy(heldCardboard[i].gameObject);
+            }
+
+            heldCardboard.Clear();
+        }
+
         void OnEnable()
         {
             cardboardHolders.Add(this);
@@ -54,6 +67,8 @@ namespace Cardboard
             if (heldCardboard.Count >= 2) return false;
 
             heldCardboard.Add(CreateCardboardItemGO(cardboardItem));
+
+            AudioManager.Play("Item Place");
 
             return true;
         }
@@ -126,31 +141,40 @@ namespace Cardboard
 
         async void CombineItems()
         {
-            if (ItemCombinationHandler.Combine(heldCardboard, out var result))
+            if (!ItemCombinationHandler.Combine(heldCardboard, out var result)) return;
+            
+            AudioManager.Play3D("Item Shrink", transform.position);
+
+            await Task.Delay((int)(1000f * 0.05f));
+
+            CardboardItemGO newItem = result.GetItemGO();
+
+            newItem.transform.localScale = Vector3.zero;
+
+            newItem.enabled = false;
+
+            // Scale down two current items
+            for (int i = 0; i < heldCardboard.Count; ++i)
             {
-                CardboardItemGO newItem = result.GetItemGO();
-
-                newItem.transform.localScale = Vector3.zero;
-
-                newItem.enabled = false;
-
-                // Scale down two current items
-                for (int i = 0; i < heldCardboard.Count; ++i)
+                heldCardboard[i].transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
                 {
-                    heldCardboard[i].transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
-                    {
-                        Destroy(heldCardboard[i].gameObject);
-                    });
-                }
-
-                heldCardboard.Clear();
-
-                await Task.Delay((int)(1000f * 0.5f));
-
-                PositionCardboardOnlyOne(newItem.transform, 1.3f);
-
-                heldCardboard.Add(newItem);
+                    Destroy(heldCardboard[i].gameObject);
+                });
             }
+
+            heldCardboard.Clear();
+
+            await Task.Delay((int)(1000f * 0.3f));            
+
+            AudioManager.Play3D("Item Scale Up", transform.position);
+
+            await Task.Delay((int)(1000f * 0.2f));
+
+            PositionCardboardOnlyOne(newItem.transform, 1.3f);
+
+
+            heldCardboard.Add(newItem);
+            
         }
 
         public void MouseOver()
@@ -235,6 +259,13 @@ namespace Cardboard
             return heldCardboard[0];
         }
 
+        public BoardGamePlayer GetPlayer()
+        {
+            if (!ContainsPlayerCharacter()) return null;
+
+            return Board.instance.GetBoardGamePlayer(this);
+        }
+
         public string PlayerPieceUniqueID()
         {
             if (!ContainsPlayerCharacter()) return "";
@@ -258,6 +289,20 @@ namespace Cardboard
         {
             for (int i = 0; i < cardboardHolders.Count; ++i)
             {
+                if (!cardboardHolders[i].ContainsPiece(cardboardPieceUniqueID)) continue;
+
+                return cardboardHolders[i];
+            }
+
+            return null;
+        }
+
+        public static CardboardHolderGO GetCardboardHolderWithOnlyPiece(string cardboardPieceUniqueID)
+        {
+           
+            for (int i = 0; i < cardboardHolders.Count; ++i)
+            {
+                if (cardboardHolders[i].heldCardboard.Count != 1) continue;
                 if (!cardboardHolders[i].ContainsPiece(cardboardPieceUniqueID)) continue;
 
                 return cardboardHolders[i];

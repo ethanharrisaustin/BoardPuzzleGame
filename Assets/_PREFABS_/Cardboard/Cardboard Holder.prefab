@@ -358,6 +358,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   collectable: 0
+  shrunken: 0
 --- !u!65 &1126029885693092550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -377,8 +378,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.53, z: 0}
+  m_Size: {x: 0.82, y: 0.35, z: 0.79}
+  m_Center: {x: 0, y: 0.14, z: 0}
 --- !u!1 &2615906612053819387
 GameObject:
   m_ObjectHideFlags: 0

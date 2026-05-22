@@ -25,8 +25,17 @@ public class UI_ItemBoard : MonoBehaviour
         instance = this;
     }
 
+    public static void ClearItems()
+    {
+        items.Clear();
+
+        instance.UpdateUI();
+    }
+
     public static void AddItemToBoard(CardboardItemObject cardboardItemObject)
     {
+        AudioManager.Play("Item Collect");
+
         if (AlreadyInItemBoard(cardboardItemObject)) 
         {
             JustDoGoToAnim(cardboardItemObject);

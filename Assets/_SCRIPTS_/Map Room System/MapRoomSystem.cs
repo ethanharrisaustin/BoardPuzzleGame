@@ -436,14 +436,32 @@ namespace MapRooms
             return false;
         }
 
+        
+
         #endif
 
+        public bool GetNextRoom(out Room room)
+        {
+            for (int i = 0; i < groupOfRooms.rooms.Length - 1; ++i)
+            {
+                if (groupOfRooms.rooms[i] == currentRoom)
+                {
+                    room = groupOfRooms.rooms[i + 1];
+                    return true;
+                }
+            }
+
+            room = null;
+            return false;
+        }
+        
         #endregion
 
         #region Saving Room States
 
         public void SaveCurrentRoom()
         {
+            return;
             if (currentRoom == null) return;
 
             List<RoomObjectSave> roomObjectSaves = new List<RoomObjectSave>();

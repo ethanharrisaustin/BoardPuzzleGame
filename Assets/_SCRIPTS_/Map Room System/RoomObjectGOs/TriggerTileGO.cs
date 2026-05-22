@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cardboard;
 using MapNavigation;
 using UnityEngine;
 
@@ -79,6 +80,16 @@ namespace MapRooms
             for (int i = 0; i < objectsOnTile.Count; ++i)
             {
                 if (objectsOnTile[i] is PlayerGO) return true;
+            }
+
+            return false;
+        }
+
+        public bool ContainsCardboardHolder()
+        {
+            for (int i = 0; i < objectsOnTile.Count; ++i)
+            {
+                if (objectsOnTile[i] is CardboardHolderGO) return true;
             }
 
             return false;

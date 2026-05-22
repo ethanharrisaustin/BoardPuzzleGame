@@ -21,7 +21,7 @@ public class ClickingManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (UI_CompletionMenu.isOpen)
+        if (UI_CompletionMenu.isOpen || !UI_RaycastCatcher.mouseOver)
         {
             previousButton = null;
             currentButton = null;
@@ -38,7 +38,7 @@ public class ClickingManager : MonoBehaviour
 
     void GetHoveredButton(RaycastHit hit)
     {
-        currentButton = GetButton3D(hit);
+        currentButton = GetButton3DVersion2(hit);
 
         if (previousButton != currentButton)
         {
@@ -60,7 +60,7 @@ public class ClickingManager : MonoBehaviour
             currentDragOnto = null;
         }
 
-        currentDragOnto = GetDragOnto(hit);
+        currentDragOnto = GetDragOntoVersion2(hit);
 
         if (previousDragOnto != currentDragOnto)
         {
@@ -107,12 +107,38 @@ public class ClickingManager : MonoBehaviour
 
         if (button3D != null && !button3D.enabled) button3D = null;
 
-        button3D ??= hitInfo.transform.GetComponentInParent<IButton3D>(false);
+        if (button3D == null) button3D = hitInfo.transform.GetComponentInParent<IButton3D>(false);
 
         if (button3D != null && !button3D.enabled) button3D = null;
 
         return button3D;
     }
+
+    IButton3D GetButton3DVersion2(RaycastHit hitInfo)
+    {
+        if (hitInfo.transform == null)
+        {
+            return null;
+        }
+
+        IButton3D[] button3Ds = hitInfo.transform.GetComponentsInChildren<IButton3D>(false);
+
+        for (int i = 0; i < button3Ds.Length; ++i)
+        {
+            if (button3Ds[i].enabled) return button3Ds[i];
+        }
+        
+
+        button3Ds = hitInfo.transform.GetComponentsInParent<IButton3D>(false);
+
+        for (int i = 0; i < button3Ds.Length; ++i)
+        {
+            if (button3Ds[i].enabled) return button3Ds[i];
+        }
+        
+        return null;
+    }
+
 
     IDragOnto GetDragOnto(RaycastHit hitInfo)
     {
@@ -130,6 +156,30 @@ public class ClickingManager : MonoBehaviour
         if (dragOnto != null && !dragOnto.enabled) dragOnto = null;
 
         return dragOnto;
+    }
+
+    IDragOnto GetDragOntoVersion2(RaycastHit hitInfo)
+    {
+        if (hitInfo.transform == null)
+        {
+            return null;
+        }
+
+        IDragOnto[] dragOntos = hitInfo.transform.GetComponentsInChildren<IDragOnto>(false);
+
+        for (int i = 0; i < dragOntos.Length; ++i)
+        {
+            if (dragOntos[i].enabled) return dragOntos[i];
+        }
+
+        dragOntos = hitInfo.transform.GetComponentsInParent<IDragOnto>(false);
+
+        for (int i = 0; i < dragOntos.Length; ++i)
+        {
+            if (dragOntos[i].enabled) return dragOntos[i];
+        }
+
+        return null;
     }
 
     IButton3D mouseDownButton = null;

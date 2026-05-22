@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: -1 - Board Game Levels
   m_EditorClassIdentifier: Assembly-CSharp::MapRoomSystem.GroupOfRooms
   rooms:
+  - {fileID: 11400000, guid: bac05e337aea74cf1926e2128b759420, type: 2}
   - {fileID: 11400000, guid: 28ee01981928d45ef8817a1e164828fe, type: 2}
+  - {fileID: 11400000, guid: 47fcdb2ca99be4501ab2cc2c54b939dc, type: 2}

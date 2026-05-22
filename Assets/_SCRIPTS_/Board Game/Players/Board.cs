@@ -10,7 +10,6 @@ namespace BoardGame
     public class Board : MonoBehaviour
     {
         public static Board instance;
-        public BoardSetup boardSetup; // Temp! °C
 
         public List<BoardGamePlayer> players = new List<BoardGamePlayer>();
 
@@ -24,10 +23,10 @@ namespace BoardGame
         void Awake()
         {
             instance = this;
-            SetUpBoard(boardSetup);
+            SetUpBoard();
         }
 
-        public void SetUpBoard(BoardSetup boardSetup)
+        public void SetUpBoard()
         {
             players.Clear();
         }
@@ -76,6 +75,8 @@ namespace BoardGame
 
             SetStartPositions();
 
+            UI_CassetteControls.instance.Play();
+
             StartCoroutine(BoardGameRoutine());
         }
 
@@ -88,6 +89,8 @@ namespace BoardGame
             inPlayMode = false;
 
             ResetPieces();
+
+            UI_CassetteControls.instance.Stop();
         }
 
         void SetStartPositions()
@@ -136,6 +139,10 @@ namespace BoardGame
 
                 if (player == null) break;
 
+                CardboardHolderGO cardboardHolderGO = player.GetCardboardHolder();
+
+                if (cardboardHolderGO == null) break;
+
                 for (int i = 0; i < player.movementCards.Length; ++i)
                 {
                     UI_Card_Base card = CardboardItems.GetCardItem(player.movementCards[i]);
@@ -146,12 +153,12 @@ namespace BoardGame
 
                     if (performedAction == false) { OnCannotPerformAction(ref player, i); break; }
                     
-                    UI_PlayerTurnsInGame.Show(player.GetCardboardHolder(), i);
+                    UI_PlayerTurnsInGame.Show(cardboardHolderGO, i);
                     
                     yield return waitForTimeBetweenMoves;
                 }
 
-                //yield return waitForOneSecond;
+                yield return waitForOneSecond;
 
                 IncreasePlayersTurn(ref playersTurn);
             }
@@ -176,6 +183,8 @@ namespace BoardGame
             }
 
             UI_PlayerTurnsInGame.instance.CloseImmediately();
+
+            UI_CassetteControls.instance.Stop();
         }
 
         void OnCannotPerformAction(ref BoardGamePlayer player, int i)

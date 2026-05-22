@@ -11,6 +11,8 @@ namespace MoveItMoveIt
         {
             if (player.GetCardboardHolder().shrunken) return false;
             
+            AudioManager.Play3D("Jump V1", player.GetCardboardHolder().GetPosition());
+
             return true;
         }
 

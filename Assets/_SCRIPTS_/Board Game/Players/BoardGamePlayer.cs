@@ -39,7 +39,7 @@ namespace BoardGame
 
         public CardboardHolderGO GetCardboardHolder()
         {
-            return CardboardHolderGO.GetCardboardHolderWithPiece(playerID);
+            return CardboardHolderGO.GetCardboardHolderWithOnlyPiece(playerID);
         }
 
         public bool CanDoMove()

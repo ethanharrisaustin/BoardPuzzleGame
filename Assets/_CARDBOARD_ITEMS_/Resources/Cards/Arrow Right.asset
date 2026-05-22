@@ -15,4 +15,8 @@ MonoBehaviour:
   unique_id: arrow right
   icon: {fileID: 5794155314715692409, guid: e4432afa32fef41ff9ebcae93166087d, type: 3}
   roomObject: {fileID: 5336580913677875449, guid: 866c70404f4184067ab34d919bba245f, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
   cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Pointing Right

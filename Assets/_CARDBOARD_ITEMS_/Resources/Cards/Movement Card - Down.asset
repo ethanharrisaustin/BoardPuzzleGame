@@ -15,3 +15,8 @@ MonoBehaviour:
   unique_id: move card down
   icon: {fileID: 8216922248759751263, guid: e5da7bc457c7e46bb992f66aeafacab6, type: 3}
   roomObject: {fileID: 4213656796893089985, guid: 59ef68683dbc747a2b319748003a0a87, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Move Down Card

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using DG.Tweening;
+using MapRooms;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +34,11 @@ public class UI_CompletionMenu : MonoBehaviour
     [SerializeField] AnimationCurve menuOpenAnimCurve;
     [SerializeField] RectTransform menuOffPos, menuOnPos;
 
+    [Space]
+
+    [SerializeField] float closeTime = 0.3f;
+    [SerializeField] Transform closedMenuPosition;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -62,6 +68,7 @@ public class UI_CompletionMenu : MonoBehaviour
         bannerThing.DOKill(false);
 
         holder.localScale = Vector2.zero;
+        holder.position = new Vector3(Screen.width/2f, Screen.height/2f);
         holder.DOScaleX(1f, openTime).SetEase(holderXAnimCurve);
         holder.DOScaleY(1f, openTime).SetEase(holderYAnimCurve);
 
@@ -77,5 +84,30 @@ public class UI_CompletionMenu : MonoBehaviour
 
         darkness.DOKill(false);
         darkness.DOFade(0.7f, openTime);
+    }
+
+    public void Close()
+    {
+        isOpen = false;
+
+        holder.DOKill(false);
+        bannerThing.DOKill(false);
+        menu.DOKill(false);
+        darkness.DOKill(false);
+
+        darkness.DOFade(0f, closeTime);
+
+        holder.DOMove(closedMenuPosition.position, closeTime).SetEase(Ease.InQuad).OnComplete(() =>
+        {
+            graphicRaycaster.enabled = false;
+            canvas.enabled = false;
+        });
+    }
+
+    public void NextLevelBtn()
+    {
+        GoToNextLevel.NextLevel();
+
+        Close();
     }
 }

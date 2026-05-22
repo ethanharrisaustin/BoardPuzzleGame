@@ -34,6 +34,8 @@ namespace MoveItMoveIt
 
         UI_PlayerTurnBoard playerTurnBoard;
 
+        [SerializeField] bool interactable = true;
+
         [SerializeField] Color highlightColour;
         [SerializeField] Color unhighlightColour;
         [SerializeField] Color impossibleMoveColour;
@@ -45,6 +47,16 @@ namespace MoveItMoveIt
         void Awake()
         {
             playerTurnBoard = GetComponentInParent<UI_PlayerTurnBoard>();
+        }
+
+        void OnEnable()
+        {
+            if (interactable) turnSlots.Add(this);
+        }
+
+        void Update()
+        {
+            mouseWithCardHoverTimer -= Time.deltaTime;
         }
 
         #endregion
@@ -88,6 +100,7 @@ namespace MoveItMoveIt
 
         #region Dragging in Cards
 
+        float mouseWithCardHoverTimer = 0f;
         void MouseEnterWithCard()
         {
             if (!ValidCardDragged()) return;
@@ -97,6 +110,8 @@ namespace MoveItMoveIt
             hoveredSlot = this;
 
             mouseWithCardOver = true;
+
+            PlayHoverSFX();
         }
 
         void MouseExitWithCard()
@@ -113,6 +128,8 @@ namespace MoveItMoveIt
             Highlight();
 
             cardRectHoveredSlot = this;
+
+            PlayHoverSFX();
         }
 
         public static void CardRectExit()
@@ -127,6 +144,13 @@ namespace MoveItMoveIt
 
                 turnSlots[i].Unhighlight();
             }       
+        }
+
+        void PlayHoverSFX()
+        {
+            if (mouseWithCardHoverTimer < 0f) AudioManager.Play("UI Pluck 2");
+
+            mouseWithCardHoverTimer = 0.1f;
         }
 
         bool ValidCardDragged()
@@ -248,7 +272,7 @@ namespace MoveItMoveIt
         #endregion
 
         #region Dragging Cards Off
-        
+
         void MouseEnterWithoutCard()
         {
             if (!hasCard) return;

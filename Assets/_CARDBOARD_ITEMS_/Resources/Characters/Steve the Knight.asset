@@ -19,3 +19,4 @@ MonoBehaviour:
   useOnce: 0
   cached_ui_item: {fileID: 0}
   savedValues: []
+  itemName: Steve

@@ -14,15 +14,21 @@ public class CameraMoveWithMouse : MonoBehaviour
     [SerializeField] float camMoveSpeed = 1f;
     [SerializeField] Transform camFowardLeft, camFowardRight;
     Vector3 camMovement;
+
+
     
     // Update is called once per frame
     void Update()
     {
-        camMovement = CreateCamMovement();
+        //camMovement = CreateCamMovement();
+        camMovingTimer -= Time.deltaTime;
 
-        transform.position += camMovement * Time.deltaTime * camMoveSpeed;
+        if (camIsMoving && camMovingTimer < 0)
+        {
+            camIsMoving = false;
 
-
+            AudioManager.Stop("Cam Move");
+        }
     }
 
     Vector3 cachedCamMovement = new Vector3();
@@ -131,5 +137,64 @@ public class CameraMoveWithMouse : MonoBehaviour
         }
     }
 
-    
+    public void MoveCamUp()
+    {
+        Vector3 camForward = Camera.main.transform.forward;
+
+        camMovement.x = camForward.x;
+        camMovement.z = camForward.z;
+
+        transform.position += camMovement * Time.deltaTime * camMoveSpeed;
+
+        CamStartMoving();
+    }
+
+    public void MoveCamDown()
+    {
+        Vector3 camForward = Camera.main.transform.forward;
+
+        camMovement.x = -camForward.x;
+        camMovement.z = -camForward.z;
+
+        transform.position += camMovement * Time.deltaTime * camMoveSpeed;
+
+        CamStartMoving();
+    }
+
+    public void MoveCamLeft()
+    {
+        Vector3 camRight = Camera.main.transform.right;
+
+        camMovement.x = -camRight.x;
+        camMovement.z = -camRight.z;
+
+        transform.position += camMovement * Time.deltaTime * camMoveSpeed * 0.75f;
+
+        CamStartMoving();
+    }
+
+    public void MoveCamRight()
+    {
+        Vector3 camRight = Camera.main.transform.right;
+
+        camMovement.x = camRight.x;
+        camMovement.z = camRight.z;
+
+        transform.position += camMovement * Time.deltaTime * camMoveSpeed * 0.75f;
+
+        CamStartMoving();
+    }
+
+    float camMovingTimer = 0f;
+    bool camIsMoving = false;
+    void CamStartMoving()
+    {
+        if (camMovingTimer < 0f)
+        {
+            AudioManager.Play("Cam Move");
+        }
+
+        camMovingTimer = 0.2f;
+        camIsMoving = true;
+    }
 }

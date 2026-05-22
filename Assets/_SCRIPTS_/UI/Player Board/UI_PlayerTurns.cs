@@ -84,6 +84,8 @@ namespace MoveItMoveIt
 
             BoardGamePlayer boardGamePlayer = Board.instance.GetBoardGamePlayer(currentCardboardHolder);
 
+            if (boardGamePlayer == null) return;
+            
             string[] moveCards = boardGamePlayer.GetMovementCards();
 
             for (int i = 0; i < moveCards.Length; ++i)

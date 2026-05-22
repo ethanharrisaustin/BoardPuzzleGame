@@ -15,3 +15,8 @@ MonoBehaviour:
   unique_id: move card left
   icon: {fileID: 2426661945179154086, guid: 37816c6a3d90a46cfac15f2f3f83ee88, type: 3}
   roomObject: {fileID: 7467132930847533008, guid: e40e0ac70116141dea96ea63d0b02cfa, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Move Left Card

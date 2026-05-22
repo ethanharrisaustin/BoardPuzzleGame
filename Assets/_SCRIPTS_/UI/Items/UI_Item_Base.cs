@@ -60,6 +60,11 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         prevMousePos = cMousePos;
+
+        if (mouseOver)
+        {
+            UI_ItemLabel.instance.ShowLabel(cardboardItemObject.itemName);
+        }
     }
 
     public virtual void OnPointerEnter(PointerEventData eventData)
@@ -67,6 +72,8 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         mouseOver = true;
 
         SetItemBrightness(highlightedBrightness);
+
+        AudioManager.Play("UI Pluck");
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
