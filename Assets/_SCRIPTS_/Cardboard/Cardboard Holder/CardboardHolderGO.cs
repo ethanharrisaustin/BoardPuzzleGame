@@ -9,7 +9,7 @@ using BoardGame;
 
 namespace Cardboard
 {
-    public class CardboardHolderGO : MoveableObjectGO, IButton3D
+    public class CardboardHolderGO : MoveableObjectGO, IButton3D, IDraggable3D
     {
         public List<CardboardItemGO> heldCardboard;
 
@@ -328,6 +328,34 @@ namespace Cardboard
             transform.DOScale(0f, 0.4f).SetEase(Ease.InBack);
 
             transform.DOMove(FinishFloorTileGO.FinishTile.GetPosition(), 0.3f);
+        }
+
+        public void MouseDown() {}
+        public void MouseUp() {}
+        public void OnDrag(Vector2 _) {}
+       
+
+        CardboardItemObject draggingObject;
+        public void StartDrag(Vector2 mousePos)
+        {
+            CardboardItemGO itemToCollect = heldCardboard[heldCardboard.Count - 1];
+
+            draggingObject = itemToCollect.cardboardItemObject;
+
+            heldCardboard.Remove(itemToCollect);
+
+            UI_ItemBoard.StartDraggingItem(draggingObject);
+
+            MoveFirstCardboardToCenter();
+
+            Destroy(itemToCollect.gameObject);
+        }
+
+        public void EndDrag(Vector2 mousePos)
+        {
+            UI_ItemBoard.StopDraggingItem(draggingObject);
+
+            AudioManager.Play("Item Collect");
         }
     }
 }

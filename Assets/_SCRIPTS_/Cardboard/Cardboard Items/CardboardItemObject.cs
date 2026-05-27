@@ -1,4 +1,5 @@
 using MoveItMoveIt;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,6 @@ namespace Cardboard
     [CreateAssetMenu(fileName = "Cardboard Item Object", menuName = "Board Game/CardboardItemObject")]
     public class CardboardItemObject : ScriptableObject, IItem
     {
-        public string unique_id;
         public GameObject icon;
         public GameObject roomObject;
         public bool isPlayerPiece, useOnce;
@@ -18,6 +18,23 @@ namespace Cardboard
 
         public string itemName;
 
+        public string unique_id
+        {
+            get
+            {
+                return itemName;
+            }
+        }
+
+        void OnEnable()
+        {
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Gizmos/Cardboard Item Object.png");
+            if (icon != null)
+            {
+                EditorGUIUtility.SetIconForObject(this, icon);
+            }
+        }
+
         public UI_Item_Base GetItemUI()
         {
             if (cached_ui_item == null)
@@ -25,8 +42,6 @@ namespace Cardboard
                 Transform parent = UI_ItemBoard.instance.itemUiParent;
 
                 cached_ui_item = Instantiate(icon, parent).GetComponent<UI_Item_Base>();
-
-                cached_ui_item.unique_id = unique_id;
 
                 cached_ui_item.cardboardItemObject = this;
             }

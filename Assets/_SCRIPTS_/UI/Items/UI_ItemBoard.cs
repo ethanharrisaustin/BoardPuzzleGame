@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Cardboard;
-using UnityEngine.UI;
 
 public class UI_ItemBoard : MonoBehaviour
 {  
     public static List<CardboardItemObject> items = new List<CardboardItemObject>();
 
-    [SerializeField] Transform firstSlotPosition;
+    public Transform firstSlotPosition;
     public Transform itemUiParent;
 
     public static UI_ItemBoard instance;
@@ -54,6 +53,59 @@ public class UI_ItemBoard : MonoBehaviour
             1f);
     }
 
+    public static void AddItemToBoardWithScaleAnimation(CardboardItemObject cardboardItemObject)
+    {
+        if (GetItemUI(cardboardItemObject.unique_id, out UI_Item_Base item))
+        {
+            if (item.IsHidden()) item.ScaleInShow();
+
+            return;
+        }
+
+        items.Insert(0, cardboardItemObject);
+
+        UI_Item_Base itemUI = cardboardItemObject.GetItemUI();
+
+        itemUI.gameObject.SetActive(false);
+        itemUI.transform.parent = null;
+
+        instance.animationHandler.ScaleInNewItem(itemUI);
+
+        instance.UpdateUI();
+    }
+
+    public static void AddItemToBoardWithoutNotify(CardboardItemObject cardboardItemObject)
+    {
+        if (AlreadyInItemBoard(cardboardItemObject)) return;
+
+        items.Insert(0, cardboardItemObject);
+    }
+
+    public static void StartDraggingItem(CardboardItemObject cardboardItemObject)
+    {
+        bool needsToHide = !AlreadyInItemBoard(cardboardItemObject);
+
+        UI_Item_Base item = cardboardItemObject.GetItemUI();
+
+        if (needsToHide)
+        {
+            item.transform.parent = null;
+            item.gameObject.SetActive(false);
+        }
+
+        UI_DraggedItem.Get().SetUpDrag(item, Vector2.zero);
+    }
+
+    public static void StopDraggingItem(CardboardItemObject cardboardItemObject)
+    {
+        bool addedToDragOnto = false;
+
+        if (UI_DraggedItem.Get().draggedItem != null)
+            UI_DraggedItem.Get().ForceStopDraggingItem(out addedToDragOnto);
+        
+        if (!addedToDragOnto) AddItemToBoard(cardboardItemObject);
+    }
+
     static void JustDoGoToAnim(CardboardItemObject cardboardItemObject)
     {
         if (!GetItemUI(cardboardItemObject.unique_id, out UI_Item_Base item)) return;
@@ -77,6 +129,15 @@ public class UI_ItemBoard : MonoBehaviour
         }
 
         return false;
+    }
+
+    public static void ShowAndResetItem(string unique_id)
+    {
+        if (!GetItemUI(unique_id, out var item)) return;
+
+        item.Show();
+        item.dragging = false;
+        item.mouseDown = false;
     }
 
     public class ItemEndPosition
@@ -243,6 +304,31 @@ public class UI_ItemBoard : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public static UI_Item_Base ClosestItemToMouse()
+    {
+        Vector2 mousePos = Input.mousePosition;
+
+        instance.GetOldListOfItems();
+
+        float currentDistance;
+        float smallestDistance = Mathf.Infinity;
+        CardboardItemObject closestItem = null;
+        for (int i = 0; i < instance.oldListOfItems.Count; ++i)
+        {
+            currentDistance = Vector2.Distance(mousePos, instance.oldListOfItems[i].transform.position);
+
+            if (currentDistance < smallestDistance)
+            {
+                smallestDistance = currentDistance;
+                closestItem = instance.oldListOfItems[i];
+            }
+        }
+
+        if (closestItem == null) return null;
+
+        return closestItem.GetItemUI();
     }
 }
 

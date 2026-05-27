@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c19efc975534f58b09c753b7818bb5, type: 3}
+  m_Name: Plank of Wood from Campfire and Water
+  m_EditorClassIdentifier: Assembly-CSharp::Cardboard.ItemCombinationObject
+  itemA: {fileID: 11400000, guid: 19d915d4f123449cb81600053a1b3034, type: 2}
+  itemB: {fileID: 11400000, guid: 266af9233c629463cac20e85e911f6e2, type: 2}
+  result: {fileID: 11400000, guid: 1658fc73f662643248f25a8327562300, type: 2}

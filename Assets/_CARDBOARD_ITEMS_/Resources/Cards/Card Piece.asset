@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
   m_Name: Card Piece
   m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
-  unique_id: card piece
+  assetTexture: {fileID: 0}
   icon: {fileID: 5794155314715692409, guid: 1f2404c35f26c4ea6bc1ae49d2e5a9d8, type: 3}
   roomObject: {fileID: 2022489383520496198, guid: 55bc164893c074346b28db4c2cd0df26, type: 3}
   isPlayerPiece: 0

@@ -8,6 +8,8 @@ public class UI_ItemBoardAnimationHandler : MonoBehaviour
 {
     public ObjectPool pool;
 
+    public UI_ItemAnimation scaleInAnimation;
+
     public void MakeBoardItemsStartPos(List<CardboardItemObject> items, Vector2[] oldPositions)
     {
         pool.DestroyAll();
@@ -34,5 +36,18 @@ public class UI_ItemBoardAnimationHandler : MonoBehaviour
         await Task.Delay((int)(1000f * UI_ItemAnimation.animationTime));
        
         onComplete.Invoke(); 
+    }
+
+    public void ScaleInNewItem(UI_Item_Base itemUI)
+    {
+        Transform firstSlotPos = UI_ItemBoard.instance.firstSlotPosition;
+
+        UI_ItemAnimation newItem = scaleInAnimation;
+
+        newItem.gameObject.SetActive(true);
+        
+        newItem.SetUpAnimationStart(itemUI, firstSlotPos.position);
+
+        newItem.DoScaleIn();
     }
 }

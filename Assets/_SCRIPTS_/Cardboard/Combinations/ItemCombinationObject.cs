@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Cardboard
@@ -9,6 +10,15 @@ namespace Cardboard
         public CardboardItemObject itemA;
         public CardboardItemObject itemB;
         public CardboardItemObject result;
+
+        void OnEnable()
+        {
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Gizmos/Item Combination Object.png");
+            if (icon != null)
+            {
+                EditorGUIUtility.SetIconForObject(this, icon);
+            }
+        }
 
         public bool CanCombine(List<CardboardItemGO> cardboardItemGOs)
         {

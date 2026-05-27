@@ -12,7 +12,22 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     Vector2 mouseDownOffset;
 
-    UI_Item_Base draggedItem;
+    public UI_Item_Base draggedItem;
+
+    public string unique_id 
+    { 
+        get 
+        { 
+            if (draggedItem != null) 
+            {
+                return draggedItem.unique_id; 
+            } 
+            else
+            {
+                return "";
+            };
+        }
+    }
  
     void Awake()
     {
@@ -63,7 +78,8 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     public void MouseUp()
     {
-        draggedItem?.OnPointerUp(null);
+        if (draggedItem != null)
+            draggedItem.OnPointerUp(null);
     }
 
     void DisableImages()
@@ -97,6 +113,9 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void OnStopDragging()
     {
+        draggedItem.draggingFromItems = false;
+        draggedItem.dragging = false;
+
         if (draggedItem.AddToTurnSlot())
         {
             AddToTurnSlot();
@@ -127,9 +146,7 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
         UI_Item_Base goToItem = GetDraggedItem();
 
-        UI_ItemBoard.GetItemUI(goToItem.unique_id, out UI_Item_Base item);
-
-        if (item.IsHidden()) item.ScaleInShow();
+        UI_ItemBoard.AddItemToBoardWithScaleAnimation(goToItem.cardboardItemObject);
 
         UI_Card_Base card = draggedItem as UI_Card_Base;
 
@@ -151,9 +168,7 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         }
         else
         {
-            UI_ItemBoard.GetItemUI(goToItem.unique_id, out UI_Item_Base item);
-
-            if (item.IsHidden()) item.ScaleInShow();
+            UI_ItemBoard.AddItemToBoardWithScaleAnimation(draggedItem.cardboardItemObject);   
         }
     }
 
@@ -161,6 +176,29 @@ public class UI_DraggedItem : MonoBehaviour, IItem
     {
         gameObject.SetActive(false);
         draggedItem = null;
+    }
+
+    public void ForceStopDraggingItem(out bool addedToDragOnto)
+    {
+        addedToDragOnto = false;
+
+        if (draggedItem.AddToTurnSlot())
+        {
+            AddToTurnSlot();
+        }
+        else if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
+        {
+            EndDragAndScaleItemBackIn();
+
+            addedToDragOnto = true;
+        }
+        // Drop item back to item board
+        else if (draggedItem.CancelDrag())
+        {
+            //CancelDrag();
+        } 
+
+        StopFollowingMouse();
     }
 
     public Image[] GetImages()

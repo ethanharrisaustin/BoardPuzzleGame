@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
   m_Name: Arrow Right
   m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
-  unique_id: arrow right
+  assetTexture: {fileID: 0}
   icon: {fileID: 5794155314715692409, guid: e4432afa32fef41ff9ebcae93166087d, type: 3}
   roomObject: {fileID: 5336580913677875449, guid: 866c70404f4184067ab34d919bba245f, type: 3}
   isPlayerPiece: 0

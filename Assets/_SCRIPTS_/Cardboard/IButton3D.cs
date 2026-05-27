@@ -15,7 +15,11 @@ public interface IDraggable3D
 {
     void MouseDown();
     void MouseUp();
-    void StartDrag(Vector3 worldPosition);
-    void OnDrag(Vector3 worldPosition);
-    void EndDrag(Vector3 worldPosition);
+    void StartDrag(Vector2 worldPosition);
+    void OnDrag(Vector2 worldPosition);
+    void EndDrag(Vector2 worldPosition);
+
+    GameObject gameObject { get; }
+
+    bool enabled { get; set;}
 }

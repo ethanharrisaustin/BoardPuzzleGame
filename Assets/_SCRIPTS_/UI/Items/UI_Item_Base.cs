@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using Cardboard;
 using DG.Tweening;
 using JetBrains.Annotations;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +17,7 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public static float pressedBrightness = 0.7f;
 
     protected bool mouseOver { get; private set; }
+    protected bool mouseOverForgiving { get; private set; }
     public bool mouseDown;
 
     Vector2 mouseDownPosition;
@@ -23,17 +26,38 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public bool dragging;
 
-    public string unique_id;
+    public bool draggingFromItems = false;
+
+    float draggingFromItemsTimer = 0f;
+    public bool wasDraggingFromItems { get { return draggingFromItemsTimer > 0f; } }
+
+    float hidingForSeconds = 0f;
 
     public CardboardItemObject cardboardItemObject;
+
+    public string unique_id 
+    { 
+        get 
+        { 
+            if (cardboardItemObject != null) 
+            {
+                return cardboardItemObject.unique_id; 
+            } 
+            else
+            {
+                return "";
+            };
+        }
+    }
 
     protected virtual void Awake()
     {
         mouseOver = false;
         mouseDown = false;
         dragging = false;
+        mouseOverForgiving = false;
         
-        images = GetComponentsInChildren<Image>();
+        images = GetComponentsInChildren<Image>(true);
 
         originalColour = new Color[images.Length];
 
@@ -47,6 +71,16 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     protected virtual void Update()
     {
+        draggingFromItemsTimer -= Time.deltaTime;
+
+        if (draggingFromItems) draggingFromItemsTimer = 0.3f;
+
+        if (hidingForSeconds > 0f)
+        {
+            Hide();
+            hidingForSeconds -= Time.deltaTime;
+        }
+
         Vector2 cMousePos = Input.mousePosition;
 
         if (cMousePos != prevMousePos)
@@ -61,9 +95,9 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         prevMousePos = cMousePos;
 
-        if (mouseOver)
+        if (mouseOver || mouseOverForgiving)
         {
-            UI_ItemLabel.instance.ShowLabel(cardboardItemObject.itemName);
+            if (!SomethingDragging()) UI_ItemLabel.instance.ShowLabel(cardboardItemObject.itemName);
         }
     }
 
@@ -73,14 +107,41 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         SetItemBrightness(highlightedBrightness);
 
-        AudioManager.Play("UI Pluck");
+        if (!mouseOverForgiving) 
+        {
+            if (!SomethingDragging()) AudioManager.Play("UI Pluck");
+            SetItemBrightness(highlightedBrightness);
+        }
+    }
+
+    public void MouseEnterForgiving()
+    {
+        mouseOverForgiving = true;
+
+        if (!mouseOver) 
+        {
+            SetItemBrightness(highlightedBrightness);
+
+            if (!SomethingDragging()) AudioManager.Play("UI Pluck");
+        }
+    }
+
+    public void MouseExitForgiving()
+    {
+        mouseOverForgiving = false;
+
+        if (!mouseOver)
+        {
+            SetItemBrightness(normalBrightness);
+        }
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         mouseOver = false;
 
-        SetItemBrightness(normalBrightness);
+        if (!mouseOverForgiving)
+            SetItemBrightness(normalBrightness);
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -99,6 +160,9 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             SetItemBrightness(highlightedBrightness);
         else
             SetItemBrightness(normalBrightness);
+        
+        dragging = false;
+        draggingFromItems = false;
     }
 
     public virtual void OnPointerMove(Vector2 mousePosition)
@@ -111,7 +175,7 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         
         if (mouseDown == false) return;
 
-        const float dragAllowance = 10;
+        const float dragAllowance = -1;
 
         if (DistanceFromMouseDownPos() > dragAllowance)
         {
@@ -121,25 +185,37 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public virtual void OnPointerStartDrag()
     {
+        if (dragging) return;
+
         dragging = true;
+       
+        UI_DraggedItem.Get().SetUpDrag(this, mouseDownOffset);
+
+        draggingFromItems = true;
 
         Hide();
-
-        UI_DraggedItem.Get().SetUpDrag(this, mouseDownOffset);
     }
 
     public virtual void OnPointerEndDrag()
     {
         dragging = false;
+
+        draggingFromItems = false;
     }
 
     float DistanceFromMouseDownPos()
     {
-        return Vector2.Distance(mouseDownPosition, prevMousePos);
+        return Vector2.Distance(mouseDownPosition, Input.mousePosition);
     }
 
     void FollowMouse()
     {
+        if (draggingFromItems)
+        {
+
+            Hide();
+        }
+
         if (!mouseDown)
         {
             OnPointerEndDrag();
@@ -179,8 +255,16 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
+    public virtual void HideFor(float seconds)
+    {
+        hidingForSeconds = seconds;
+        Hide();
+    }
+
     public virtual void Show()
     {
+        hidingForSeconds = 0f;
+        
         for (int i = 0; i < images.Length; ++i)
         {
             images[i].enabled = true;
@@ -255,5 +339,10 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public bool IsHidden()
     {
         return images[0].enabled == false;
+    }
+
+    public bool SomethingDragging()
+    {
+        return dragging || UI_DraggedItem.IsDraggingItem();
     }
 }

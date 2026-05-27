@@ -65,7 +65,7 @@ namespace MapRooms
             }
             catch
             {
-                Debug.Log("Setting values of LightUpFloorTileGO Failed.");
+//                Debug.Log("Setting values of LightUpFloorTileGO Failed.");
             }
         }
 

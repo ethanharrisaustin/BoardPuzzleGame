@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using Cardboard;
+using BoardGame;
 
 public class UI_ItemMoveTo : MonoBehaviour
 {
@@ -26,8 +27,6 @@ public class UI_ItemMoveTo : MonoBehaviour
         
         return instance;
     }
-
-
 
     void SetUp(IItem draggedItem)
     {
@@ -53,11 +52,16 @@ public class UI_ItemMoveTo : MonoBehaviour
 
         UI_Item_Base goToItem = UI_DraggedItem.GetDraggedItem();
 
+        if (goToItem.wasDraggingFromItems)
+        {
+            goToItem.HideFor(1f);
+        }
+
         MoveTo(UI_ItemBoard.GetItemUIPosition(goToItem.unique_id), () =>
         {
             onComplete?.Invoke();
 
-            goToItem.Show();
+            UI_ItemBoard.ShowAndResetItem(goToItem.unique_id);
         });
     }
 
@@ -66,13 +70,36 @@ public class UI_ItemMoveTo : MonoBehaviour
         SetUp(draggedItem, draggedItem.transform.position, moveToPos, onComplete, timeTakenMultiplier);
     }
 
+    public void SetUp(IItem item, Vector2 startPos, Action onComplete = null, float timeTakenMultiplier = 1f)
+    {
+        SetUp(item);
+
+        transform.position = startPos;
+
+        void newOnComplete()
+        {
+            onComplete?.Invoke();
+
+            UI_ItemBoard.ShowAndResetItem(item.unique_id);
+        }
+
+        MoveTo(UI_ItemBoard.GetItemUIPosition(item.unique_id), newOnComplete, timeTakenMultiplier);
+    }
+
     public void SetUp(IItem item, Vector2 startPos, Vector2 moveToPos, Action onComplete = null, float timeTakenMultiplier = 1f)
     {
         SetUp(item);
 
         transform.position = startPos;
 
-        MoveTo(moveToPos, onComplete, timeTakenMultiplier);
+        void newOnComplete()
+        {
+            onComplete?.Invoke();
+
+            UI_ItemBoard.ShowAndResetItem(item.unique_id);
+        }
+
+        MoveTo(moveToPos, newOnComplete, timeTakenMultiplier);
     }
 
     void DisableImages()
@@ -89,8 +116,8 @@ public class UI_ItemMoveTo : MonoBehaviour
 
         transform.DOMove(position, 0.4f * timeTakenMultiplier).SetEase(Ease.OutExpo).SetUpdate(false).OnComplete(() =>
         {
-            onComplete?.Invoke();
             gameObject.SetActive(false);
+            onComplete?.Invoke();
         });
     }
 }

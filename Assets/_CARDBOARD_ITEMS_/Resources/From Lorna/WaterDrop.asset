@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
   m_Name: WaterDrop
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
-  unique_id: waterdrop
+  assetTexture: {fileID: 2800000, guid: 9b557937bb61048fe853e431e393d6a0, type: 3}
   icon: {fileID: 467625095914781922, guid: f20a671fd970147fc9b10b9da1d0b98a, type: 3}
   roomObject: {fileID: 5951706921851737734, guid: 16836a3a982c444dd88bb5169e02c273, type: 3}
   isPlayerPiece: 0

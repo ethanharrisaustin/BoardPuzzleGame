@@ -20,7 +20,7 @@ namespace MoveItMoveIt
 
         UI_Card_Base currentCard;
 
-        bool hasCard { get {return currentCard != null; } }
+        bool hasCard { get { return currentCard != null; } }
 
         public static UI_TurnSlot hoveredSlot = null;
         public static UI_TurnSlot cardRectHoveredSlot = null;
@@ -39,6 +39,17 @@ namespace MoveItMoveIt
         [SerializeField] Color highlightColour;
         [SerializeField] Color unhighlightColour;
         [SerializeField] Color impossibleMoveColour;
+
+        public string unique_id 
+        { 
+            get 
+            { 
+                if (currentCard != null)
+                    return  currentCard.unique_id; 
+                else 
+                    return "";
+            } 
+        }
 
         #endregion
 
@@ -312,6 +323,11 @@ namespace MoveItMoveIt
             if (UI_DraggedItem.IsDraggingItem()) return;
 
             MouseUp();
+
+            if (currentCard != null)
+                UI_ItemMoveTo.Get().SetUp(currentCard, transform.position);
+
+            SetSlotAsEmpty();
 
             mouseDown = false;
         }

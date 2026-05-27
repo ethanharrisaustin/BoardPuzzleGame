@@ -157,16 +157,36 @@ public class Input : MonoBehaviour
 
     void MouseDown()
     {
-        ClickingManager.instance?.MouseDown();
+        if (ClickingManager.instance != null) ClickingManager.instance.MouseDown();
+
+        if (UI_ItemBoard_CheckDragging.instance != null) UI_ItemBoard_CheckDragging.instance.MouseDown();
     }
 
     void MouseUp()
     {
-        ClickingManager.instance?.MouseUp();
+        if (ClickingManager.instance != null) ClickingManager.instance.MouseUp();
+
+        if (UI_ItemBoard_CheckDragging.instance != null) UI_ItemBoard_CheckDragging.instance.MouseUp();
     }
 
     void SetUpMousePosition()
     {
         mousePosition = Mouse.current.position.ReadValue();
+
+        OnMouseMove();
+    }
+
+    Vector2 prevMousePos = Vector2.negativeInfinity;
+    void OnMouseMove()
+    {
+        if (prevMousePos == mousePosition) return;
+
+        Vector2 moveAmount = mousePosition - prevMousePos;
+
+        prevMousePos = mousePosition;
+
+        if (ClickingManager.instance != null) ClickingManager.instance.MouseMove(moveAmount, mousePosition);
+
+        if (UI_ItemBoard_CheckDragging.instance != null) UI_ItemBoard_CheckDragging.instance.MouseMove();
     }
 }
