@@ -1267,6 +1267,138 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Camera Movement"",
+            ""id"": ""521c82a3-763b-44f1-8e48-ecd23193be60"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveCamLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""a201ab05-9707-4c4c-ab01-d48dcadfd202"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCamRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""b021f571-1cc0-4e5b-9182-d5b401e6fce3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCamUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec89d893-22ad-44be-908c-4bcbb63f91c5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCamDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""9805dcd8-3bee-4fe0-8679-6f4bcbb9201e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""01593707-3542-46b6-8056-b8e944e90da9"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""609ddd18-eb6a-4631-ad42-6c44809ab9ac"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df7858e1-d778-45d7-a7c0-1f4aa40a3188"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26fdcfc0-3f5d-4857-bfb0-74b6b798ef4a"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a81a730-d1c8-4dcc-b818-0dced64c086c"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95880454-1c56-4dfd-8712-78dc6ab36107"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b57a293-734c-4b1b-a91a-aeab090b7f7e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63655320-128e-4b20-9218-6698c4637730"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""MoveCamDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1392,12 +1524,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Camera Movement
+        m_CameraMovement = asset.FindActionMap("Camera Movement", throwIfNotFound: true);
+        m_CameraMovement_MoveCamLeft = m_CameraMovement.FindAction("MoveCamLeft", throwIfNotFound: true);
+        m_CameraMovement_MoveCamRight = m_CameraMovement.FindAction("MoveCamRight", throwIfNotFound: true);
+        m_CameraMovement_MoveCamUp = m_CameraMovement.FindAction("MoveCamUp", throwIfNotFound: true);
+        m_CameraMovement_MoveCamDown = m_CameraMovement.FindAction("MoveCamDown", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_CameraMovement.enabled, "This will cause a leak and performance issues, InputSystem_Actions.CameraMovement.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1892,6 +2031,135 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // Camera Movement
+    private readonly InputActionMap m_CameraMovement;
+    private List<ICameraMovementActions> m_CameraMovementActionsCallbackInterfaces = new List<ICameraMovementActions>();
+    private readonly InputAction m_CameraMovement_MoveCamLeft;
+    private readonly InputAction m_CameraMovement_MoveCamRight;
+    private readonly InputAction m_CameraMovement_MoveCamUp;
+    private readonly InputAction m_CameraMovement_MoveCamDown;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Camera Movement".
+    /// </summary>
+    public struct CameraMovementActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public CameraMovementActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "CameraMovement/MoveCamLeft".
+        /// </summary>
+        public InputAction @MoveCamLeft => m_Wrapper.m_CameraMovement_MoveCamLeft;
+        /// <summary>
+        /// Provides access to the underlying input action "CameraMovement/MoveCamRight".
+        /// </summary>
+        public InputAction @MoveCamRight => m_Wrapper.m_CameraMovement_MoveCamRight;
+        /// <summary>
+        /// Provides access to the underlying input action "CameraMovement/MoveCamUp".
+        /// </summary>
+        public InputAction @MoveCamUp => m_Wrapper.m_CameraMovement_MoveCamUp;
+        /// <summary>
+        /// Provides access to the underlying input action "CameraMovement/MoveCamDown".
+        /// </summary>
+        public InputAction @MoveCamDown => m_Wrapper.m_CameraMovement_MoveCamDown;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_CameraMovement; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="CameraMovementActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(CameraMovementActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="CameraMovementActions" />
+        public void AddCallbacks(ICameraMovementActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraMovementActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraMovementActionsCallbackInterfaces.Add(instance);
+            @MoveCamLeft.started += instance.OnMoveCamLeft;
+            @MoveCamLeft.performed += instance.OnMoveCamLeft;
+            @MoveCamLeft.canceled += instance.OnMoveCamLeft;
+            @MoveCamRight.started += instance.OnMoveCamRight;
+            @MoveCamRight.performed += instance.OnMoveCamRight;
+            @MoveCamRight.canceled += instance.OnMoveCamRight;
+            @MoveCamUp.started += instance.OnMoveCamUp;
+            @MoveCamUp.performed += instance.OnMoveCamUp;
+            @MoveCamUp.canceled += instance.OnMoveCamUp;
+            @MoveCamDown.started += instance.OnMoveCamDown;
+            @MoveCamDown.performed += instance.OnMoveCamDown;
+            @MoveCamDown.canceled += instance.OnMoveCamDown;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="CameraMovementActions" />
+        private void UnregisterCallbacks(ICameraMovementActions instance)
+        {
+            @MoveCamLeft.started -= instance.OnMoveCamLeft;
+            @MoveCamLeft.performed -= instance.OnMoveCamLeft;
+            @MoveCamLeft.canceled -= instance.OnMoveCamLeft;
+            @MoveCamRight.started -= instance.OnMoveCamRight;
+            @MoveCamRight.performed -= instance.OnMoveCamRight;
+            @MoveCamRight.canceled -= instance.OnMoveCamRight;
+            @MoveCamUp.started -= instance.OnMoveCamUp;
+            @MoveCamUp.performed -= instance.OnMoveCamUp;
+            @MoveCamUp.canceled -= instance.OnMoveCamUp;
+            @MoveCamDown.started -= instance.OnMoveCamDown;
+            @MoveCamDown.performed -= instance.OnMoveCamDown;
+            @MoveCamDown.canceled -= instance.OnMoveCamDown;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CameraMovementActions.UnregisterCallbacks(ICameraMovementActions)" />.
+        /// </summary>
+        /// <seealso cref="CameraMovementActions.UnregisterCallbacks(ICameraMovementActions)" />
+        public void RemoveCallbacks(ICameraMovementActions instance)
+        {
+            if (m_Wrapper.m_CameraMovementActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="CameraMovementActions.AddCallbacks(ICameraMovementActions)" />
+        /// <seealso cref="CameraMovementActions.RemoveCallbacks(ICameraMovementActions)" />
+        /// <seealso cref="CameraMovementActions.UnregisterCallbacks(ICameraMovementActions)" />
+        public void SetCallbacks(ICameraMovementActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraMovementActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraMovementActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="CameraMovementActions" /> instance referencing this action map.
+    /// </summary>
+    public CameraMovementActions @CameraMovement => new CameraMovementActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -2172,5 +2440,41 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera Movement" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="CameraMovementActions.AddCallbacks(ICameraMovementActions)" />
+    /// <seealso cref="CameraMovementActions.RemoveCallbacks(ICameraMovementActions)" />
+    public interface ICameraMovementActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "MoveCamLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCamLeft(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCamRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCamRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCamUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCamUp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCamDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCamDown(InputAction.CallbackContext context);
     }
 }

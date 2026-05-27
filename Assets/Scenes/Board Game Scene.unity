@@ -7683,6 +7683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_Card_Movement
   mouseDown: 0
   dragging: 0
+  draggingFromItems: 0
   cardboardItemObject: {fileID: 0}
   direction: 1
 --- !u!1 &638695977
@@ -12133,6 +12134,7 @@ MonoBehaviour:
   camMoveSpeed: 6.5
   camFowardLeft: {fileID: 1897763320}
   camFowardRight: {fileID: 73907370}
+  positionTracker: {fileID: 1373611553}
 --- !u!1 &996147093
 GameObject:
   m_ObjectHideFlags: 0
