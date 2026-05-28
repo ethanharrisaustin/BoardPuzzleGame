@@ -8,6 +8,8 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 {
     static UI_DraggedItem instance;
 
+    public static Vector3 position { get { return instance.transform.position; } }
+
     [SerializeField] Image[] images;
 
     Vector2 mouseDownOffset;
@@ -120,7 +122,7 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         {
             AddToTurnSlot();
         }
-        else if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
+        else if (draggedItem.DropOntoObject())
         {
             EndDragAndScaleItemBackIn();
         }
@@ -186,7 +188,7 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         {
             AddToTurnSlot();
         }
-        else if (draggedItem.AddToCardboardHolder() || draggedItem.DropOntoObject())
+        else if (draggedItem.DropOntoObject())
         {
             EndDragAndScaleItemBackIn();
 
@@ -235,5 +237,82 @@ public class UI_DraggedItem : MonoBehaviour, IItem
         if (Get().draggedItem == null) return false;
         
         return true;
+    }
+
+    static Rect[] imageRects;
+    public static void SetUpImageBoundaries()
+    {
+        imageRects = new Rect[NumberImagesUsed()];
+
+        for (int i = 0; i < imageRects.Length; ++i)
+        {
+            imageRects[i] = instance.images[i].rectTransform.rect;
+        }
+    }
+
+    public static Vector2 UpperBoundary()
+    {
+        Vector3 highestUpperBoundary = Vector2.zero;
+
+        for (int i = 0; i < imageRects.Length; ++i)
+        {
+            if (imageRects[i].yMax <= highestUpperBoundary.y) continue;
+
+            highestUpperBoundary.y = imageRects[i].yMax;
+        }
+
+        return position + highestUpperBoundary;
+    }
+
+    public static Vector2 LowerBoundary()
+    {
+        Vector3 lowestBoundary = Vector2.zero;
+
+        for (int i = 0; i < imageRects.Length; ++i)
+        {
+            if (imageRects[i].yMin >= lowestBoundary.y) continue;
+
+            lowestBoundary.y = imageRects[i].yMin;
+        }
+
+        return position + lowestBoundary;
+    }
+
+    public static Vector2 LeftBoundary()
+    {
+        Vector3 leftestBoundary = Vector2.zero;
+
+        for (int i = 0; i < imageRects.Length; ++i)
+        {
+            if (imageRects[i].xMin >= leftestBoundary.x) continue;
+
+            leftestBoundary.x = imageRects[i].xMin;
+        }
+
+        return position + leftestBoundary;
+    }
+
+    public static Vector2 RightBoundary()
+    {
+        Vector3 rigtestBoundary = Vector2.zero;
+
+        for (int i = 0; i < imageRects.Length; ++i)
+        {
+            if (imageRects[i].xMax <= rigtestBoundary.x) continue;
+
+            rigtestBoundary.x = imageRects[i].xMax;
+        }
+
+        return position + rigtestBoundary;
+    }
+
+    static int NumberImagesUsed()
+    {
+        for (int i = 0; i < instance.images.Length; ++i)
+        {
+            if (instance.images[i].enabled == false) return i;
+        }
+
+        return instance.images.Length;
     }
 }

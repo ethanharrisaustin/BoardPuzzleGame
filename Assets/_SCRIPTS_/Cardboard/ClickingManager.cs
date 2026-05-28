@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ClickingManager : MonoBehaviour
@@ -123,6 +124,8 @@ public class ClickingManager : MonoBehaviour
 
             previousDragOnto = null;
             currentDragOnto = null;
+
+            return;
         }
 
         currentDragOnto = GetDragOnto(hit);
@@ -137,6 +140,28 @@ public class ClickingManager : MonoBehaviour
     }
 
     IDragOnto GetDragOnto(RaycastHit hitInfo)
+    {
+        IDragOnto dragOnto = GetDragUsingRaycastHit(hitInfo);
+        if (dragOnto != null) return dragOnto;
+
+        UI_DraggedItem.SetUpImageBoundaries();
+
+        dragOnto = GetDragOntoUpperBoundary();
+        if (dragOnto != null) return dragOnto;
+
+        dragOnto = GetDragOntoLowerBoundary();
+        if (dragOnto != null) return dragOnto;
+
+        dragOnto = GetDragOntoLeftBoundary();
+        if (dragOnto != null) return dragOnto;
+
+        dragOnto = GetDragOntoRightBoundary();
+        if (dragOnto != null) return dragOnto;
+
+        return null;
+    }
+
+    IDragOnto GetDragUsingRaycastHit(RaycastHit hitInfo)
     {
         if (hitInfo.transform == null)
         {
@@ -160,9 +185,46 @@ public class ClickingManager : MonoBehaviour
         return null;
     }
 
+    IDragOnto GetDragOntoUpperBoundary()
+    {
+        RaycastHit hit = HitRaycast(CreateRay(UI_DraggedItem.UpperBoundary()));
+
+        return GetDragUsingRaycastHit(hit);
+    }
+
+    IDragOnto GetDragOntoLowerBoundary()
+    {
+        RaycastHit hit = HitRaycast(CreateRay(UI_DraggedItem.LowerBoundary()));
+
+        return GetDragUsingRaycastHit(hit);
+    }
+
+    IDragOnto GetDragOntoLeftBoundary()
+    {
+        RaycastHit hit = HitRaycast(CreateRay(UI_DraggedItem.LeftBoundary()));
+
+        return GetDragUsingRaycastHit(hit);
+    }
+
+    IDragOnto GetDragOntoRightBoundary()
+    {
+        RaycastHit hit = HitRaycast(CreateRay(UI_DraggedItem.RightBoundary()));
+
+        return GetDragUsingRaycastHit(hit);
+    }
+
     public IDragOnto HoveredDragOnto()
     {
         return GetDragOnto(HitRaycast());
+    }
+
+    
+
+    Ray CreateRay(Vector3 screenPosition)
+    {
+        Ray ray = GetCamera().ScreenPointToRay(screenPosition);
+
+        return ray;
     }
 
     #endregion
@@ -276,8 +338,11 @@ public class ClickingManager : MonoBehaviour
 
     RaycastHit HitRaycast()
     {
-        Ray ray = CreateRay();
+        return HitRaycast(CreateRay());
+    }
 
+    RaycastHit HitRaycast(Ray ray)
+    {
         Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layerMask, QueryTriggerInteraction.Collide);
 
         return hitInfo;

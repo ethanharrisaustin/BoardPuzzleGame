@@ -9,7 +9,7 @@ using BoardGame;
 
 namespace Cardboard
 {
-    public class CardboardHolderGO : MoveableObjectGO, IButton3D, IDraggable3D
+    public class CardboardHolderGO : MoveableObjectGO, IButton3D, IDraggable3D, IDragOnto
     {
         public List<CardboardItemGO> heldCardboard;
 
@@ -356,6 +356,21 @@ namespace Cardboard
             UI_ItemBoard.StopDraggingItem(draggingObject);
 
             AudioManager.Play("Item Collect");
+        }
+
+        public void OnDragHover(CardboardItemObject cardboardItemObject)
+        {
+            
+        }
+
+        public void OnDragUnhover()
+        {
+            
+        }
+
+        public bool OnDropDraggedItem(CardboardItemObject cardboardItemObject)
+        {
+            return AddCardboard(cardboardItemObject);
         }
     }
 }

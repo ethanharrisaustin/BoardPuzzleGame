@@ -264,7 +264,7 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public virtual void Show()
     {
         hidingForSeconds = 0f;
-        
+
         for (int i = 0; i < images.Length; ++i)
         {
             images[i].enabled = true;
@@ -301,25 +301,6 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public virtual bool AddToTurnSlot()
     {
         return false;
-    }
-
-    public virtual bool AddToCardboardHolder()
-    {
-        IButton3D hoveredButton = ClickingManager.instance.HoveredButton();
-
-        if (hoveredButton == null)
-        {
-            return false;
-        }
-
-        if (hoveredButton is CardboardHolderGO == false)
-        {
-            return false;
-        }
-
-        CardboardHolderGO cardboardHolder = hoveredButton as CardboardHolderGO;
-
-        return cardboardHolder.AddCardboard(cardboardItemObject);
     }
 
     public virtual bool DropOntoObject()
