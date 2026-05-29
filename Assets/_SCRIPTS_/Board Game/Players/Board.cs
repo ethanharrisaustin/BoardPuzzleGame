@@ -149,16 +149,26 @@ namespace BoardGame
 
                     if (card == null) continue;
 
+                    if (!inPlayMode) break;
+
                     bool performedAction = card.PerformAction(player);
 
                     if (performedAction == false) { OnCannotPerformAction(ref player, i); break; }
                     
                     UI_PlayerTurnsInGame.Show(cardboardHolderGO, i);
                     
+                    if (!inPlayMode) break;
+
                     yield return waitForTimeBetweenMoves;
+
+                    if (!inPlayMode) break;
                 }
 
+                if (!inPlayMode) break;
+
                 yield return waitForOneSecond;
+
+                if (!inPlayMode) break;
 
                 IncreasePlayersTurn(ref playersTurn);
             }
@@ -172,11 +182,7 @@ namespace BoardGame
         {
             if (inPlayMode)
             {
-                if (BoardGameWin())
-                {
-                    // Open win menu
-                }
-                else
+                if (!BoardGameWin())
                 {
                     ResetPieces();
                 }
@@ -243,7 +249,7 @@ namespace BoardGame
 
         bool BoardGameWin()
         {
-            return false;
+            return UI_CompletionMenu.isOpen;
         }
     }
 }

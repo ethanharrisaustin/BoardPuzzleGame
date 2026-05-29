@@ -36,15 +36,22 @@ namespace MoveItMoveIt
 
         public static void Show(CardboardHolderGO cardboardHolderGO)
         {
-            if (instance.currentCardboardHolder != null &&
-                instance.currentCardboardHolder.PlayerPieceUniqueID() == cardboardHolderGO.PlayerPieceUniqueID())
-                return;
+            if (AlreadyShowing(cardboardHolderGO)) return;
 
             instance.currentCardboardHolder = cardboardHolderGO;
 
             instance.AnimationOpen();
 
             instance.ShowCards();
+        }
+
+        public static bool AlreadyShowing(CardboardHolderGO cardboardHolderGO)
+        {
+            if (instance.currentCardboardHolder != null &&
+                instance.currentCardboardHolder.PlayerPieceUniqueID() == cardboardHolderGO.PlayerPieceUniqueID())
+                return true;
+
+            return false;
         }
 
         public void EjectPlayerPiece()

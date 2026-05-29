@@ -33,6 +33,11 @@ public class Input : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        Init();
+    }
+
     public static Input Main()
     {
         if (instance == null) instance = FindFirstObjectByType<Input>();
@@ -53,6 +58,8 @@ public class Input : MonoBehaviour
         if (playerInput != null) return;
 
         playerInput = GetComponent<PlayerInput>();
+
+        foreach (InputActionMap map in playerInput.actions.actionMaps) map.Enable();
     }
 
     public void OnControlSchemeChanged()

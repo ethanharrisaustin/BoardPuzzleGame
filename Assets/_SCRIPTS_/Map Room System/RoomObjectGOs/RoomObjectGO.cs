@@ -20,6 +20,8 @@ namespace MapRooms
         #if UNITY_EDITOR
         public RoomObject GetRoomObject()
         {
+            if (IgnoreInRoomMaking()) return null;
+
             GameObject prefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(gameObject);
 
             if (prefab == null)
@@ -66,6 +68,8 @@ namespace MapRooms
 
         public virtual void Remove(RoomObject.FlySettings flySettings, Action<RoomObjectGO> destroy)
         {
+            if (IgnoreInRoomMaking()) return;
+
             transform.DOKill(false);
             
             FlyObjectOut(flySettings, destroy);
@@ -130,6 +134,8 @@ namespace MapRooms
 
         void OnDisable()
         {
+            if (IgnoreInRoomMaking()) return;
+
             OnWasDeactivated();
 
             MapRoomSystem.OnRoomObjectWasDeactivated();
@@ -137,6 +143,8 @@ namespace MapRooms
 
         void OnWasDeactivated()
         {
+            if (IgnoreInRoomMaking()) return;
+            
             if (roomObjectPool == null) return;
 
             roomObjectPool.needsToRecalulateActives = true;
@@ -263,6 +271,11 @@ namespace MapRooms
             if (a == null || b == null) return false;
 
             return a.GetPosition() == b.GetPosition() && a.GetScale() == b.GetScale() && a.GetRotation() == b.GetRotation();
+        }
+
+        public virtual bool IgnoreInRoomMaking()
+        {
+            return false;
         }
     }
 }

@@ -17,6 +17,7 @@ public class CameraMovementInput : MonoBehaviour
 
     public void MoveLeft(InputAction.CallbackContext context)
     {
+        Debug.Log("Move left input");
         if (context.started) left = true;
         else if (context.canceled) left = false;
     }

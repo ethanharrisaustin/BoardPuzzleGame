@@ -66,6 +66,8 @@ namespace MapRooms
 
             for (int i = 0; i < pool.Count;)
             {
+                if (pool[i].IgnoreInRoomMaking()) continue;
+
                 if (pool[i] == null)
                 {
                     pool.RemoveAt(i);
@@ -84,6 +86,8 @@ namespace MapRooms
 
             for (int i = 0; i < pool.Count;)
             {
+                if (pool[i].IgnoreInRoomMaking()) continue;
+                
                 if (pool[i] == null)
                 {
                     pool.RemoveAt(i);

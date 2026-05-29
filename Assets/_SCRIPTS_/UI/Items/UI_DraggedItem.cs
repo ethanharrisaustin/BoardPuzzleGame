@@ -94,6 +94,8 @@ public class UI_DraggedItem : MonoBehaviour, IItem
 
     void FollowMouse()
     {
+        CheckToOpenCardboardHolderPlayerTurns();
+        
         if (UI_CompletionMenu.isOpen)
         {
             if (draggedItem != null) draggedItem.dragging = false;
@@ -178,6 +180,25 @@ public class UI_DraggedItem : MonoBehaviour, IItem
     {
         gameObject.SetActive(false);
         draggedItem = null;
+    }
+
+    bool CheckToOpenCardboardHolderPlayerTurns()
+    {
+        if (draggedItem is not UI_Card_Movement) return false;
+
+        IDragOnto dragOnto = ClickingManager.instance.HoveredDragOnto();
+
+        if (dragOnto is not CardboardHolderGO) return false;
+
+        CardboardHolderGO hoveredCardboardHolder = dragOnto as CardboardHolderGO;
+
+        if (!hoveredCardboardHolder.ContainsPlayerCharacter()) return false;
+
+        if (UI_PlayerTurnBoard.AlreadyShowing(hoveredCardboardHolder)) return false;
+
+        UI_PlayerTurnBoard.Show(hoveredCardboardHolder);
+        
+        return true;
     }
 
     public void ForceStopDraggingItem(out bool addedToDragOnto)

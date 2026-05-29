@@ -64,7 +64,7 @@ namespace MapRooms
             }
         }
 
-        Vector3 floorPosOffset = new Vector3(0f, 0.45f, 0f);
+        protected Vector3 floorPosOffset = new Vector3(0f, 0.45f, 0f);
         public override Vector3 GetPosition()
         {
             return base.GetPosition() + floorPosOffset;

@@ -398,6 +398,8 @@ namespace MapRooms
 
             for (int i = 0; i < activeRoomObjectGOs.Length; ++i)
             {
+                if (activeRoomObjectGOs[i].IgnoreInRoomMaking()) continue;
+                
                 activeRoomObjectGOs[i].gameObject.SetActive(false);
             }
 
@@ -415,6 +417,8 @@ namespace MapRooms
             for (int i = 0; i < allRoomObjectGOs.Length; ++i)
             {
                 RoomObject newRoomObject = allRoomObjectGOs[i].GetRoomObject();
+
+                if (newRoomObject == null) continue;
 
                 if (ListContainsThisObject(roomObjectsList, newRoomObject)) continue;
 

@@ -218,8 +218,6 @@ public class ClickingManager : MonoBehaviour
         return GetDragOnto(HitRaycast());
     }
 
-    
-
     Ray CreateRay(Vector3 screenPosition)
     {
         Ray ray = GetCamera().ScreenPointToRay(screenPosition);
