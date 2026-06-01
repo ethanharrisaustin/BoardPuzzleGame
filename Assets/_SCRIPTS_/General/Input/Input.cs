@@ -26,6 +26,8 @@ public class Input : MonoBehaviour
 
     public static bool mouseClicked;
 
+    public static bool submit;
+
     void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -195,5 +197,18 @@ public class Input : MonoBehaviour
         if (ClickingManager.instance != null) ClickingManager.instance.MouseMove(moveAmount, mousePosition);
 
         if (UI_ItemBoard_CheckDragging.instance != null) UI_ItemBoard_CheckDragging.instance.MouseMove();
+    }
+
+    public void OnSubmit(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            submit = true;
+        }
+
+        else if (context.canceled)
+        {
+            submit = false;
+        }
     }
 }

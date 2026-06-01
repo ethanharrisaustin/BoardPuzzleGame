@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1191fa04a63064a3c822aef852bb758b, type: 3}
   m_Name: 1 - Level 1
   m_EditorClassIdentifier: Assembly-CSharp::MapRoomSystem.Room
-  roomUniqueID: Enemy test room
+  roomUniqueID: 1
   roomObjects:
   - position: {x: 6.41588, y: 1.39, z: 3.914}
     scale: {x: 1, y: 1, z: 1}

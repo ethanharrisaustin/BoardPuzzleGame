@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using DG.Tweening;
 using MapRooms;
+using Saving;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,8 @@ public class UI_CompletionMenu : MonoBehaviour
     [SerializeField] float closeTime = 0.3f;
     [SerializeField] Transform closedMenuPosition;
 
+    float openBuffer = 0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -58,8 +61,15 @@ public class UI_CompletionMenu : MonoBehaviour
         canvas.enabled = false;
     }
 
+    void Update()
+    {
+        openBuffer -= Time.unscaledTime;
+    }
+
     public void Open()
     {
+        if (openBuffer > 0f) return;
+
         isOpen = true;
         graphicRaycaster.enabled = true;
         canvas.enabled = true;
@@ -84,6 +94,15 @@ public class UI_CompletionMenu : MonoBehaviour
 
         darkness.DOKill(false);
         darkness.DOFade(0.7f, openTime);
+
+        MapRooms.Room room = MapRoomSystem.instance.GetCurrentRoom();
+
+        if (room != null)
+        {
+            string roomID = room.roomUniqueID;
+
+            Main.GetSaveManager().SetBool(roomID + "completed", true);
+        }
     }
 
     public void Close()
@@ -102,6 +121,8 @@ public class UI_CompletionMenu : MonoBehaviour
             graphicRaycaster.enabled = false;
             canvas.enabled = false;
         });
+
+        openBuffer = 1f;
     }
 
     public void NextLevelBtn()

@@ -22,6 +22,12 @@ namespace MapRooms
 
         Room currentRoom = null;
 
+        public Room mainMenuRoom;
+        public GameObject mainMenuGO;
+        public Room levelSelectRoom;
+        public GameObject levelSelectGO;
+        public GameObject gameplayGO;
+
         //[SerializeField] RoomObjectGO floorTile;
 
         #endregion
@@ -44,7 +50,40 @@ namespace MapRooms
                 if (roomObjectPool != null) roomObjectPools.Add(roomObjectPool);
             }
 
-            SpawnRoom(groupOfRooms.rooms[0]);
+            SpawnMainMenuRoom();
+        }
+
+        #endregion
+
+        #region  Main menu and Level Select
+
+        public void SpawnMainMenuRoom()
+        {
+            if (currentRoom == null) SpawnRoom(mainMenuRoom);
+
+            else SwapToRoom(mainMenuRoom);
+
+            mainMenuGO.SetActive(true);
+            levelSelectGO.SetActive(false);
+            gameplayGO.SetActive(false);
+        }
+
+        public void SpawnLevelSelectRoom()
+        {
+            if (currentRoom == null) SpawnRoom(levelSelectRoom);
+
+            else SwapToRoom(levelSelectRoom);
+
+            levelSelectGO.SetActive(true);
+            mainMenuGO.SetActive(false);
+            gameplayGO.SetActive(false);
+        }
+
+        public void ShowInLevel()
+        {
+            levelSelectGO.SetActive(false);
+            mainMenuGO.SetActive(false);
+            gameplayGO.SetActive(true);
         }
 
         #endregion
@@ -116,6 +155,11 @@ namespace MapRooms
 
             CalculateRoomStartAndEndPos();
 
+            await Task.Yield();
+
+            // Once they have all been spawned, initialise them!
+            for (int i = 0; i < roomObjectPools.Count; ++i) roomObjectPools[i].LateInitAllRoomObjects();
+
             //PlayerGO.instance?.ActivatePlayer();
 
             //MapToAStarGrid.instance?.CreateAStarGrid();
@@ -165,6 +209,16 @@ namespace MapRooms
         public async void SwapToRoom(Room room)
         {
             if (currentRoom == room) return;
+
+            if (currentRoom == mainMenuRoom)
+            {
+                mainMenuGO.SetActive(false);
+            }
+
+            if (currentRoom == levelSelectGO)
+            {
+                levelSelectGO.SetActive(false);
+            }
 
             SaveCurrentRoom();
 
@@ -399,7 +453,7 @@ namespace MapRooms
             for (int i = 0; i < activeRoomObjectGOs.Length; ++i)
             {
                 if (activeRoomObjectGOs[i].IgnoreInRoomMaking()) continue;
-                
+
                 activeRoomObjectGOs[i].gameObject.SetActive(false);
             }
 
@@ -574,6 +628,11 @@ namespace MapRooms
                 this.type = type;
                 this.cashedList = cashedList;
             }
+        }
+
+        public Room GetCurrentRoom()
+        {
+            return currentRoom;
         }
 
         #endregion

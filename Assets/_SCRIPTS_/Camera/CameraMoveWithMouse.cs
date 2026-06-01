@@ -45,7 +45,6 @@ public class CameraMoveWithMouse : MonoBehaviour
 
         if (CameraMovementInput.left)
         {
-            Debug.Log("Move left");
             MoveCamLeft();
         }
         else if (CameraMovementInput.right)

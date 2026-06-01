@@ -87,7 +87,7 @@ namespace MapRooms
             for (int i = 0; i < pool.Count;)
             {
                 if (pool[i].IgnoreInRoomMaking()) continue;
-                
+
                 if (pool[i] == null)
                 {
                     pool.RemoveAt(i);
@@ -113,6 +113,24 @@ namespace MapRooms
                 }
 
                 pool[i].Init();
+
+                ++i;
+            }
+        }
+
+        public void LateInitAllRoomObjects()
+        {
+            if (pool == null) return;
+
+            for (int i = 0; i < pool.Count;)
+            {
+                if (pool[i] == null)
+                {
+                    pool.RemoveAt(i);
+                    continue;
+                }
+
+                pool[i].LateInit();
 
                 ++i;
             }

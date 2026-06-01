@@ -51,6 +51,11 @@ namespace MapRooms
 
         [HideInInspector] public Vector3 targetPosition;
         bool flyingIn = false;
+        /// <summary>
+        /// Called as the spawn ('fall in') animation starts.
+        /// Make sure to call base.Spawn() otherwise they won't
+        /// fall into the scene!
+        /// </summary>
         public virtual void Spawn(RoomObject roomObject, RoomObject.FlySettings flySettings)
         {
             transform.DOKill(false);
@@ -66,6 +71,11 @@ namespace MapRooms
             SetValues(roomObject.values);
         }
 
+        /// <summary>
+        /// Called as the remove ('fly out') animation starts.
+        /// Make sure to call base.Remove() otherwise they won't
+        /// transition out.
+        /// </summary>
         public virtual void Remove(RoomObject.FlySettings flySettings, Action<RoomObjectGO> destroy)
         {
             if (IgnoreInRoomMaking()) return;
@@ -144,7 +154,7 @@ namespace MapRooms
         void OnWasDeactivated()
         {
             if (IgnoreInRoomMaking()) return;
-            
+
             if (roomObjectPool == null) return;
 
             roomObjectPool.needsToRecalulateActives = true;
@@ -160,7 +170,20 @@ namespace MapRooms
             
         }
 
+        /// <summary>
+        /// Called once all of the fall in animations from Spawn() have finished,
+        /// good for doing checks that require all objects in the level to be in their final 
+        /// spawn positions.
+        /// </summary>
         public virtual void Init()
+        {
+            
+        }
+
+        /// <summary>
+        /// Called one frame after Init().
+        /// </summary>
+        public virtual void LateInit()
         {
             
         }
@@ -276,6 +299,33 @@ namespace MapRooms
         public virtual bool IgnoreInRoomMaking()
         {
             return false;
+        }
+
+        Vector3 BoxCenter(BoxCollider collider)
+        {
+            return collider.transform.position + collider.center;
+        }
+
+        Vector3 BoxHalfExtents(BoxCollider collider)
+        {
+            return new Vector3(
+                collider.size.x * collider.transform.lossyScale.x,
+                collider.size.y * collider.transform.lossyScale.y,
+                collider.size.z * collider.transform.lossyScale.z
+                );
+        }
+
+        /// <summary>
+        /// Returns an array of colliders that are inside the given box collider.
+        /// </summary>
+        protected Collider[] Overlapping(BoxCollider collider)
+        {
+            return Physics.OverlapBox(
+                BoxCenter(collider), 
+                BoxHalfExtents(collider), 
+                collider.transform.rotation, 
+                ~0, 
+                QueryTriggerInteraction.Collide);
         }
     }
 }

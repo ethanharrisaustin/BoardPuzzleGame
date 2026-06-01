@@ -148,8 +148,6 @@ namespace Saving
 				fileStream = File.Open(Application.persistentDataPath + SetFileName(), FileMode.Open);
 				variablesSave = (VariablesToSave)bf.Deserialize(fileStream);
 				fileStream.Close();
-
-				//SetAllProfiles();
 			}
 			else
 			{
@@ -165,7 +163,7 @@ namespace Saving
 		{
 			SaveManager.profile = profile;
 
-			//LoadGame();
+			LoadGame();
 		}
 
 		public void SaveGame()
