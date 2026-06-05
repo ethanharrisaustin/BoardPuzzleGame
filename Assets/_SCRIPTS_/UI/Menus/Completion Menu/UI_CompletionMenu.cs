@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using BoardGame;
 using DG.Tweening;
 using MapRooms;
 using Saving;
@@ -11,6 +12,8 @@ public class UI_CompletionMenu : MonoBehaviour
 {
     public static bool isOpen;
     public static UI_CompletionMenu instance;
+
+   [SerializeField]  UI_PauseMenu uI_PauseMenu;
 
     GraphicRaycaster graphicRaycaster;
     Canvas canvas;
@@ -102,6 +105,7 @@ public class UI_CompletionMenu : MonoBehaviour
             string roomID = room.roomUniqueID;
 
             Main.GetSaveManager().SetBool(roomID + "completed", true);
+            Main.GetSaveManager().SaveGame();
         }
     }
 
@@ -129,7 +133,11 @@ public class UI_CompletionMenu : MonoBehaviour
     {
         Close();
 
-        GoToNextLevel.NextLevel();
+        MapRoomSystem.instance.SpawnLevelSelectRoom();
+
+        Board.instance.SetUpBoard();
+
+        UI_ItemBoard.ClearItems();
     }
 
     public static bool CannotOpen()

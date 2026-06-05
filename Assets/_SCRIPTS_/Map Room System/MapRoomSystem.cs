@@ -90,6 +90,23 @@ namespace MapRooms
 
         #region Spawning in Rooms
 
+        public async void RespawnCurrentRoom()
+        {
+            SaveCurrentRoom();
+
+            RemoveAllRoomObjects();
+
+            OnStartRemoving();
+            
+            // While objects are spawning in, wait 
+            while(!FinishedFlyingOut()) await Task.Yield();
+
+            Room room = currentRoom;
+
+            currentRoom = null;
+
+            SpawnRoom(room, room.roomUniqueID);
+        }
         public void SpawnRoomImmediately(Room room)
         {
             RemoveCurrentRoom();
@@ -109,7 +126,7 @@ namespace MapRooms
         {
             if (currentRoom == room) return;
 
-            RemoveCurrentRoom();
+            if (currentRoom != null) RemoveCurrentRoom();
 
             RoomObjectSave[] roomObjectSaves = LoadRoom(room);
 

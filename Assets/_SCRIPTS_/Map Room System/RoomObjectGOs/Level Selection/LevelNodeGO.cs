@@ -11,9 +11,11 @@ namespace MapRooms
 
         [HideInInspector] [SerializeField] BoxCollider boxCollider;
 
-        [HideInInspector] [SerializeField] Material locked, unlocked, completed;
+        [SerializeField] Material locked, unlocked, completed, bonusLevel, bonusCompleted;
 
         [HideInInspector] [SerializeField] Renderer lightRenderer;
+
+        new Light light;
 
         [HideInInspector] public List<LevelNodeGO> connectedLevelNodes = new List<LevelNodeGO>();
 
@@ -22,6 +24,8 @@ namespace MapRooms
             base.Spawn(roomObject, flySettings);
 
             connectedLevelNodes.Clear();
+
+            light = GetComponentInChildren<Light>();
         }
 
         public void AddConnectedLevelNode(LevelNodeGO levelNodeGO)
@@ -39,15 +43,37 @@ namespace MapRooms
 
             if (Completed())
             {
-                lightRenderer.material = completed;
+                
+
+                if (isBonusLevel)
+                {
+                    light.color = Color.cyan;
+                    lightRenderer.material = bonusCompleted;
+                }
+                else
+                {
+                    light.color = Color.green;
+                    lightRenderer.material = completed;
+                }
             }
             else if (Unlocked())
             {
-                lightRenderer.material = unlocked;
+                if (isBonusLevel)
+                {
+                    light.color = Color.blue;
+                    lightRenderer.material = bonusLevel;
+                }
+                else
+                {
+                    light.color = Color.white;
+                    lightRenderer.material = unlocked;
+                }
             }
             else
             {
                 lightRenderer.material = locked;
+
+                light.color = Color.white * 0.6f;
             }
         }
 

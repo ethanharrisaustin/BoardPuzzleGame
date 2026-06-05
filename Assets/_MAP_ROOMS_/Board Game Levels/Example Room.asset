@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1191fa04a63064a3c822aef852bb758b, type: 3}
   m_Name: Example Room
   m_EditorClassIdentifier: Assembly-CSharp::MapRooms.Room
-  roomUniqueID: Example Room
+  roomUniqueID: 1A
   roomObjects:
   - position: {x: 12, y: 0, z: 3}
     scale: {x: 1, y: 1, z: 1}
