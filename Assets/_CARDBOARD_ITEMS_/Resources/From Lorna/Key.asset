@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
   m_Name: Key
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
-  unique_id: key
   icon: {fileID: 7827862616068664880, guid: f6d3b9d3d80c84e1b9b519ac94e863c2, type: 3}
   roomObject: {fileID: 233858197292440840, guid: 9eb56fc3285f1459ea2f82e1de790ef5, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}
   savedValues: []
-  itemName: Key
+  itemName: Cleaned Key

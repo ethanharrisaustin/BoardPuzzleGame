@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
   m_Name: RustyKeys
   m_EditorClassIdentifier: Assembly-CSharp::Cardboard.CardboardItemObject
-  unique_id: rustykeys
-  icon: {fileID: 4276458192887982517, guid: 31cc9da255ffa490395c56e260fa4f40, type: 3}
-  roomObject: {fileID: 1770120687247858359, guid: 9d56c93f248074d978f2efceb8aa1cbc, type: 3}
+  icon: {fileID: 7397802359627386751, guid: 695fb7a11cf694f76a4d567e424b6d05, type: 3}
+  roomObject: {fileID: 8436315497515104143, guid: f06421bbab4684e82952cf3af930f25f, type: 3}
   isPlayerPiece: 0
   useOnce: 0
   cached_ui_item: {fileID: 0}
