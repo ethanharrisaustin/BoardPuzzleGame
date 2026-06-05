@@ -44,7 +44,18 @@ namespace MapRooms
         {
             base.Init();
 
+            selectedLevel = GetOverlappingLevelNode();
+
+            if (selectedLevel != null)
+            {
+                DisplaySelectedLevel();
+            }
+        }
+
+        LevelNodeGO GetOverlappingLevelNode()
+        {
             Collider[] colliders = Overlapping(boxCollider);
+            LevelNodeGO selectedLevel;
 
             for (int i = 0; i < colliders.Length; ++i)
             {
@@ -52,9 +63,11 @@ namespace MapRooms
 
                 if (selectedLevel != null)
                 {
-                    DisplaySelectedLevel();
+                    return selectedLevel;
                 }
             }
+
+            return null;
         }
 
         void StartBouncing()
@@ -91,14 +104,27 @@ namespace MapRooms
 
         void DisplaySelectedLevel()
         {
-            UI_LevelSelect.instance.ShowLevel(selectedLevel);
+            UI_LevelSelect.Get().ShowLevel(selectedLevel);
         }
 
         void SelectLevel()
         {
-            if (selectedLevel == null) return;
+            if (selectedLevel == null) 
+            {
+                Debug.Log("selectedLevel is null.");
+
+                selectedLevel = GetOverlappingLevelNode();
+
+                if (selectedLevel == null)
+                {
+                    Debug.Log("Did not find overklapp9hg level");
+                    return;
+                }
+            }
 
             if (MapRoomSystem.instance.levelSelectGO.activeSelf == false) return;
+
+            if (selectedLevel.Unlocked() == false) return;
 
             string id = selectedLevel.level_id;
 

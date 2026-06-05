@@ -10,11 +10,17 @@ public class UI_LevelSelect : MonoBehaviour
     [SerializeField] TMP_Text selectedLevelTxt;
     [SerializeField] TMP_Text completedTxt;
 
-    public static UI_LevelSelect instance;
+    static UI_LevelSelect instance;
 
     void Awake()
     {
         instance = this;
+    }
+
+    public static UI_LevelSelect Get()
+    {   
+        if (instance == null) instance = FindFirstObjectByType<UI_LevelSelect>(FindObjectsInactive.Include);
+        return instance;
     }
 
     void OnEnable()

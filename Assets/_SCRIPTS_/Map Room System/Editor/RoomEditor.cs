@@ -24,6 +24,13 @@ namespace MapRooms
             if (GUILayout.Button("Load Room"))
             {
                 FindFirstObjectByType<MapRoomSystem>().SpawnRoomImmediately(room);
+
+                WallGO[] wallGOs = FindObjectsByType<WallGO>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+                for (int i = 0; i < wallGOs.Length; ++i)
+                {
+                    wallGOs[i].SetToUprightPos();
+                }
             }
 
             if (GUILayout.Button("Unload Room"))

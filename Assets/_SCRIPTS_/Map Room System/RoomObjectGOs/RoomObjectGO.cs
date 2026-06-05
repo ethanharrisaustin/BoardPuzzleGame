@@ -64,11 +64,32 @@ namespace MapRooms
             transform.eulerAngles = roomObject.rotation;
 
             targetPosition = roomObject.position;
-            FlyObjectIn(targetPosition, flySettings);
+
+            if (flySettings != null)
+            { 
+                FlyObjectIn(targetPosition, flySettings);
+            }
+            else
+            {
+                transform.position = roomObject.position;
+            }
 
             this.roomObject = roomObject;
 
             SetValues(roomObject.values);
+
+            ActivateItemPickups();
+        }
+
+        void ActivateItemPickups()
+        {
+            ItemPickUp[] itemPickUps = GetComponentsInChildren<ItemPickUp>(true);
+
+            for (int i = 0; i < itemPickUps.Length; ++i)
+            {
+                itemPickUps[i].gameObject.SetActive(true);
+                itemPickUps[i].enabled = true;
+            }
         }
 
         /// <summary>

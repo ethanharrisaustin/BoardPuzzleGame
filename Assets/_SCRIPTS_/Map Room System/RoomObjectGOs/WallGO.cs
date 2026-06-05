@@ -12,6 +12,12 @@ namespace MapRooms
 
             rotator.localEulerAngles = new Vector3(85f, 0f, 0f);
 
+            if (flySettings == null)
+            {
+                base.Spawn(roomObject, flySettings);
+                return;
+            }
+            
             float delay = (transform.position.x + transform.position.z + 5) * flySettings.delayMultiplier;
             delay += flySettings.initialDelay;
 
@@ -29,5 +35,17 @@ namespace MapRooms
             return "Wall";
         }
 
+        #if UNITY_EDITOR
+
+        public void SetToUprightPos()
+        {
+            Transform rotator = transform.GetChild(0);
+
+            rotator.DOKill(false);
+
+            rotator.localEulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        
+        #endif
     }
 }

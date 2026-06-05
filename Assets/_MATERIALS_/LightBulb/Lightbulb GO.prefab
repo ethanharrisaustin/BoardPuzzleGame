@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 2506239228596485478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.281, z: 0}
-  m_LocalScale: {x: 0.6204283, y: 0.8038, z: 1.3853}
+  m_LocalPosition: {x: 0, y: 0.314, z: 0}
+  m_LocalScale: {x: 0.6204283, y: 0.71983504, z: 1.3853}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3675577819549883799}
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88cb0d81ae7e54488a00ccfbee5363cb, type: 2}
+  - {fileID: 2100000, guid: 05c7b7ee213294d62a6b46783e646972, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,3 +146,4 @@ MonoBehaviour:
   roomObjectPool: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   cardboardItemObject: {fileID: 11400000, guid: 72d9736b732594a138c5be051ca7e396, type: 2}
+  dontCollect: 0

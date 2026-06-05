@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a58e47e9bded49798b9341a20a2bd73, type: 3}
+  m_Name: Number 8
+  m_EditorClassIdentifier: Assembly-CSharp::CardboardItemObject
+  icon: {fileID: 6745752005616155979, guid: d97228ed4c7e24e9dbf763654e5ed2b3, type: 3}
+  roomObject: {fileID: 45888656124514773, guid: 72ea0109134b54e7f9203fde1ece7d99, type: 3}
+  isPlayerPiece: 0
+  useOnce: 0
+  cached_ui_item: {fileID: 0}
+  savedValues: []
+  itemName: Number 8

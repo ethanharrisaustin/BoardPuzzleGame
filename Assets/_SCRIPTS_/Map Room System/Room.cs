@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace MapRooms
@@ -11,6 +13,7 @@ namespace MapRooms
         public string roomUniqueID;
         public RoomObject[] roomObjects;
 
+        #if UNITY_EDITOR
         void OnEnable()
         {
             Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Gizmos/Room Object Icon.png");
@@ -19,5 +22,6 @@ namespace MapRooms
                 EditorGUIUtility.SetIconForObject(this, icon);
             }
         }
+        #endif
     }
 }

@@ -17,6 +17,8 @@ public class UI_CassetteButton : MonoBehaviour
 
     public void Release()
     {
+        cassette = UI_CassetteControls.instance;
+        
         DoKill();
 
         graphicsHolder.DOLocalMoveY(0f, cassette.releaseTime).SetEase(cassette.releaseCurve);

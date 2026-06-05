@@ -18,15 +18,15 @@ public class UI_Item_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     protected bool mouseOver { get; private set; }
     protected bool mouseOverForgiving { get; private set; }
-    public bool mouseDown;
+    [HideInInspector] public bool mouseDown;
 
     Vector2 mouseDownPosition;
     Vector2 prevMousePos;
     Vector2 mouseDownOffset;
 
-    public bool dragging;
+    [HideInInspector] public bool dragging;
 
-    public bool draggingFromItems = false;
+    [HideInInspector] public bool draggingFromItems = false;
 
     float draggingFromItemsTimer = 0f;
     public bool wasDraggingFromItems { get { return draggingFromItemsTimer > 0f; } }

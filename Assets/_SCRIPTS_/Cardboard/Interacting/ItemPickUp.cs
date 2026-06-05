@@ -26,7 +26,7 @@ public class ItemPickUp : MonoBehaviour, IButton3D, IDraggable3D
     {
         UI_ItemBoard.AddItemToBoard(cardboardItemObject);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void MouseDown()
@@ -43,7 +43,7 @@ public class ItemPickUp : MonoBehaviour, IButton3D, IDraggable3D
     {
         UI_ItemBoard.StartDraggingItem(cardboardItemObject);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void OnDrag(Vector2 pos)

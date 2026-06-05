@@ -9,6 +9,8 @@ namespace Cardboard
     {
         public CardboardItemObject cardboardItemObject;
 
+        public bool dontCollect = false;
+
         public void MouseOver()
         {
     
@@ -21,6 +23,8 @@ namespace Cardboard
 
         public void Click()
         {
+            if (dontCollect) return;
+             
             UI_ItemBoard.AddItemToBoard(cardboardItemObject);
 
             Destroy(gameObject);

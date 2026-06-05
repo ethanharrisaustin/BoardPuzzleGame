@@ -40,7 +40,7 @@ public class UI_CompletionMenu : MonoBehaviour
     [SerializeField] float closeTime = 0.3f;
     [SerializeField] Transform closedMenuPosition;
 
-    float openBuffer = 0f;
+    static float openBuffer = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -63,7 +63,7 @@ public class UI_CompletionMenu : MonoBehaviour
 
     void Update()
     {
-        openBuffer -= Time.unscaledTime;
+        openBuffer -= Time.unscaledDeltaTime;
     }
 
     public void Open()
@@ -122,13 +122,18 @@ public class UI_CompletionMenu : MonoBehaviour
             canvas.enabled = false;
         });
 
-        openBuffer = 1f;
+        openBuffer = 5f;
     }
 
     public void NextLevelBtn()
     {
-        GoToNextLevel.NextLevel();
-
         Close();
+
+        GoToNextLevel.NextLevel();
+    }
+
+    public static bool CannotOpen()
+    {
+        return openBuffer > 0f;
     }
 }

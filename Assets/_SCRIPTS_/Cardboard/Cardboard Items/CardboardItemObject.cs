@@ -1,5 +1,7 @@
 using MoveItMoveIt;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +28,7 @@ namespace Cardboard
             }
         }
 
+        #if UNITY_EDITOR
         void OnEnable()
         {
             Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Gizmos/Cardboard Item Object.png");
@@ -34,6 +37,7 @@ namespace Cardboard
                 EditorGUIUtility.SetIconForObject(this, icon);
             }
         }
+        #endif
 
         public UI_Item_Base GetItemUI()
         {
@@ -79,6 +83,16 @@ namespace Cardboard
         public bool UseOnce()
         {
             return isPlayerPiece || useOnce;
+        }
+
+        public virtual bool IsGroupOfItems()
+        {
+            return false;
+        }
+
+        public virtual CardboardItemObject[] GetGroupOfItems()
+        {
+            return null;
         }
     }
 

@@ -25,7 +25,10 @@ namespace Cardboard
 
         [SerializeField] bool collectable = false;
 
+        [SerializeField] bool containsCardboardGO = false;
+
         [HideInInspector] public bool shrunken = false;
+        
 
         protected override void Start()
         {
@@ -39,12 +42,15 @@ namespace Cardboard
         {
             base.Spawn(roomObject, flySettings);
 
-            for (int i = 0; i < heldCardboard.Count; ++i)
+            if (!containsCardboardGO)
             {
-                Destroy(heldCardboard[i].gameObject);
-            }
+                for (int i = 0; i < heldCardboard.Count; ++i)
+                {
+                    Destroy(heldCardboard[i].gameObject);
+                }
 
-            heldCardboard.Clear();
+                heldCardboard.Clear();
+            }
         }
 
         void OnEnable()
@@ -57,13 +63,35 @@ namespace Cardboard
             cardboardHolders.Remove(this);
         }
 
+        static List<CardboardItemGO> cachedItemsActive = new List<CardboardItemGO>();
         protected CardboardItemGO[] GetHeldCardboards()
         {
-            return GetComponentsInChildren<CardboardItemGO>();
+            CardboardItemGO[] items = GetComponentsInChildren<CardboardItemGO>(false);
+
+            cachedItemsActive.Clear();
+
+            for (int i = 0; i < items.Length; ++i)
+            {
+                //if (items[i].enabled == false) continue;
+
+                if (items[i].gameObject.activeSelf == false) continue;
+
+                if (items[i].transform.localScale == Vector3.zero)
+                {
+                    items[i].gameObject.SetActive(false);
+                    continue;
+                }
+
+                cachedItemsActive.Add(items[i]);
+            }
+
+            return cachedItemsActive.ToArray();
         }
 
         public bool AddCardboard(CardboardItemObject cardboardItem)
         {
+            if (containsCardboardGO) return false;
+
             if (heldCardboard.Count >= 2) return false;
 
             heldCardboard.Add(CreateCardboardItemGO(cardboardItem));
@@ -141,6 +169,8 @@ namespace Cardboard
 
         async void CombineItems()
         {
+            if (containsCardboardGO) return;
+
             if (!ItemCombinationHandler.Combine(heldCardboard, out var result)) return;
             
             AudioManager.Play3D("Item Shrink", transform.position);
@@ -197,6 +227,8 @@ namespace Cardboard
                 return;
             }
 
+            if (containsCardboardGO) return;
+
             if (heldCardboard.Count > 0)
             {
                 CollectCardboard();
@@ -210,6 +242,8 @@ namespace Cardboard
 
         public void CollectCardboard()
         {
+            if (containsCardboardGO) return;
+
             CardboardItemGO itemToCollect = heldCardboard[heldCardboard.Count - 1];
 
             heldCardboard.Remove(itemToCollect);
@@ -225,6 +259,8 @@ namespace Cardboard
         bool isTweeningBounce = false;
         void HoverBounce()
         {
+            if (containsCardboardGO) return;
+
             if (isTweeningBounce) return;
 
             if (UI_DraggedItem.IsDraggingItem()) return;
@@ -338,6 +374,8 @@ namespace Cardboard
         CardboardItemObject draggingObject;
         public void StartDrag(Vector2 mousePos)
         {
+            if (containsCardboardGO) return;
+
             CardboardItemGO itemToCollect = heldCardboard[heldCardboard.Count - 1];
 
             draggingObject = itemToCollect.cardboardItemObject;
@@ -353,6 +391,8 @@ namespace Cardboard
 
         public void EndDrag(Vector2 mousePos)
         {
+            if (containsCardboardGO) return;
+
             UI_ItemBoard.StopDraggingItem(draggingObject);
 
             AudioManager.Play("Item Collect");

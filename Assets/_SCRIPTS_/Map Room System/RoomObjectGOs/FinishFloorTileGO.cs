@@ -18,7 +18,7 @@ namespace MapRooms
 
         protected override bool OnObjectEnter(Collider other)
         {
-            if (UI_CompletionMenu.isOpen) return false;
+            if (UI_CompletionMenu.isOpen || UI_CompletionMenu.CannotOpen()) return false;
             
             if (!base.OnObjectEnter(other)) return false;
 

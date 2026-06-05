@@ -9,13 +9,13 @@ namespace MapRooms
         public string level_id;
         public bool isBonusLevel;
 
-        [SerializeField] BoxCollider boxCollider;
+        [HideInInspector] [SerializeField] BoxCollider boxCollider;
 
-        [SerializeField] Material locked, unlocked, completed;
+        [HideInInspector] [SerializeField] Material locked, unlocked, completed;
 
-        [SerializeField] Renderer lightRenderer;
+        [HideInInspector] [SerializeField] Renderer lightRenderer;
 
-        public List<LevelNodeGO> connectedLevelNodes = new List<LevelNodeGO>();
+        [HideInInspector] public List<LevelNodeGO> connectedLevelNodes = new List<LevelNodeGO>();
 
         public override void Spawn(RoomObject roomObject, RoomObject.FlySettings flySettings)
         {

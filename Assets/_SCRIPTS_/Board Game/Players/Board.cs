@@ -166,7 +166,7 @@ namespace BoardGame
 
                 if (!inPlayMode) break;
 
-                yield return waitForOneSecond;
+                //yield return waitForOneSecond;
 
                 if (!inPlayMode) break;
 
