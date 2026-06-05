@@ -487,6 +487,17 @@ namespace MapRooms
 
             for (int i = 0; i < allRoomObjectGOs.Length; ++i)
             {
+                if (allRoomObjectGOs[i] == null) continue;
+                
+                if (allRoomObjectGOs[i].transform != null 
+                    &&
+                    allRoomObjectGOs[i].transform.parent != null 
+                    &&
+                    allRoomObjectGOs[i].transform.parent.GetComponentInParent<RoomObjectGO>() != null) 
+                {
+                    continue;
+                }
+
                 RoomObject newRoomObject = allRoomObjectGOs[i].GetRoomObject();
 
                 if (newRoomObject == null) continue;

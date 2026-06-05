@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MapRooms
 {
-    public class MovingWall : MonoBehaviour
+    public class MovingWall : WallGO
     {
         [SerializeField] Transform wallMoveToPos;
 
@@ -24,7 +24,7 @@ namespace MapRooms
             if (movingWalls.Count == 1) return movingWalls[0];
 
             float min_distance = Mathf.Infinity;
-            float c_distance = Mathf.Infinity;
+            float c_distance;
             MovingWall result = null;
 
             for (int i = 0; i < movingWalls.Count; ++i)
